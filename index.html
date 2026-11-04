@@ -74,9 +74,9 @@
     --chip:#ffffff;
     --shadow:0 1px 2px rgba(60,40,20,.06),0 16px 38px rgba(60,40,20,.10);
     --shadow-hover:0 1px 2px rgba(60,40,20,.08),0 26px 56px rgba(60,40,20,.16);
-    --green:#3f7d33; --green-bg:rgba(63,125,51,.10); --green-bd:rgba(63,125,51,.30);
+    --green:#2d6b22; --green-bg:rgba(45,107,34,.12); --green-bd:rgba(45,107,34,.35);
     --blue:#2c6a96;  --blue-bg:rgba(44,106,150,.10); --blue-bd:rgba(44,106,150,.30);
-    --gold:#9a6f1f;  --gold-bg:rgba(154,111,31,.12); --gold-bd:rgba(154,111,31,.32);
+    --gold:#7d5a18;  --gold-bg:rgba(125,90,24,.12); --gold-bd:rgba(125,90,24,.35);
   }
 
   *{box-sizing:border-box;}
@@ -223,7 +223,7 @@
   }
   .notice b{color:var(--ink);}
   .notice .hl{color:var(--accent);font-weight:700;}
-  .notice code{background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:2px;font-size:12.5px;font-weight:700;}
+  .notice code{background:var(--accent-soft);color:var(--accent);padding:2px 6px;border-radius:2px;font-size:12px;font-weight:700;}
 
   /* ============ 筛选工具条 ============ */
   .toolbar{
@@ -265,7 +265,7 @@
   }
   .search::placeholder{color:var(--muted);}
   .search:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
-  .count{font-size:12.5px;color:var(--muted);margin-left:auto;letter-spacing:.04em;}
+  .count{font-size:12px;color:var(--muted);margin-left:auto;letter-spacing:.04em;}
   .count b{color:var(--accent);font-family:var(--font-serif);font-size:14px;}
 
   /* ============ 分类区块 ============ */
@@ -353,7 +353,7 @@
   .badge{font-size:12px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:2px;border:1px solid transparent;}
   .badge.platform{background:var(--chip);color:var(--ink-soft);border-color:var(--line-strong);}
   /* 难度徽标——更醒目（渐变底 + 图标 + 投影） */
-  .badge.diff{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:800;letter-spacing:.03em;padding:4px 12px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.14);}
+  .badge.diff{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;letter-spacing:.03em;padding:4px 12px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.14);}
   .badge.diff .diff-ico{font-size:9px;line-height:1;transform:translateY(.5px);}
   .badge.diff-入门{color:#0b7a3b;background:linear-gradient(180deg,#e6f9ee,#c9f2da);border:1px solid #7fdda3;}
   .badge.diff-进阶{color:#1b4fc4;background:linear-gradient(180deg,#e6eeff,#c6d8ff);border:1px solid #8fb0f0;}
@@ -371,11 +371,11 @@
   .go.disabled{background:#c4c8ce;color:#fff;cursor:not-allowed;box-shadow:none;}
   .go.disabled:hover{transform:none;box-shadow:none;background:#c4c8ce;}
   .meta{font-size:12px;color:var(--muted);margin:0 0 2px;line-height:1.35;letter-spacing:.01em;}
-  .meta.teacher{color:var(--ink);font-size:12.5px;margin:0 0 4px;line-height:1.4;}
+  .meta.teacher{color:var(--ink);font-size:12px;margin:0 0 4px;line-height:1.4;}
   .meta.teacher b{color:color-mix(in srgb,var(--cat-color,var(--accent)) 45%,var(--ink));font-weight:800;}
   /* 综合评语（展签 / 美术馆标签式） */
   .intro{
-    display:none;font-size:12.5px;color:var(--ink-soft);line-height:1.62;
+    display:none;font-size:12px;color:var(--ink-soft);line-height:1.62;
     border-left:3px solid var(--cat-color,var(--accent));
     background:color-mix(in srgb,var(--cat-color,var(--accent)) 6%,transparent);
     padding:8px 12px;margin:10px 0;
@@ -401,11 +401,11 @@
   /* 卡片详情面板：系列条目 / 技法 / 载体 / 其他入口（展开后过渡显现） */
   .card-detail{overflow:hidden;max-height:0;opacity:0;margin:0;border-top:0 dashed transparent;padding-top:0;transition:max-height .2s ease,opacity .2s ease,margin .2s ease;}
   .card.is-expanded .card-detail{max-height:420px;opacity:1;margin:0 0 10px;border-top:1px dashed var(--line-strong);padding-top:8px;}
-  .detail-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;font-size:12.5px;color:var(--ink-soft);margin:0 0 8px;line-height:1.5;}
+  .detail-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;font-size:12px;color:var(--ink-soft);margin:0 0 8px;line-height:1.5;}
   .detail-line:last-child{margin-bottom:0;}
   .detail-line .lbl{font-size:12px;letter-spacing:.18em;color:color-mix(in srgb,var(--cat-color,var(--accent)) 45%,var(--ink));font-weight:800;flex:none;}
   .detail-line .series-strong{color:var(--ink);font-weight:700;}
-  .tech-chip{border:1px solid var(--line-strong);color:var(--ink-soft);font-size:12px;padding:1px 8px;border-radius:2px;background:var(--surface-2);}
+  .tech-chip{border:1px solid var(--line-strong);color:var(--ink-soft);font-size:12px;padding:2px 8px;border-radius:2px;background:var(--surface-2);}
   .act.link-btn.copied{color:var(--accent);border-color:var(--accent);}
   /* 核验日期：卡片元信息的一部分，弱化处理 */
   .meta.verify{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);}
@@ -438,7 +438,7 @@
     margin-top:48px;padding-top:22px;
     font-size:13px;color:var(--muted);line-height:1.7;
   }
-  footer code{background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:2px;font-size:12px;font-weight:700;}
+  footer code{background:var(--accent-soft);color:var(--accent);padding:2px 6px;border-radius:2px;font-size:12px;font-weight:700;}
 
   /* ============ 视觉强化 · 再升级（极光 / 旋转描边 / 胶片质感） ============ */
 
@@ -593,7 +593,7 @@
   @keyframes cardIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
 
   @media (max-width:560px){
-  .pill,.detail-btn,.path-course-ref,.alt-jump,.empty-clear,.pn-open{min-height:44px;}
+  .pill,.detail-btn,.path-course-ref,.alt-jump,.empty-clear,.pn-open,.nav-filter-btn,.nav-select,.scroll-top,.plan-btn{min-height:44px;}
   .pill{padding-top:8px;padding-bottom:8px;}
   .act{width:44px;height:44px;}
     .hero-inner{padding:0 18px 26px;}
@@ -647,7 +647,7 @@
   .card-actions .cmp-btn.active{color:#17668c;border-color:#6fb0d6;background:#d9f0fb;}
 
   /* 搜索关键词高亮 */
-  mark.hl-kw{background:linear-gradient(transparent 58%,rgba(255,211,78,.6) 0);color:inherit;padding:0 1px;border-radius:2px;}
+  mark.hl-kw{background:linear-gradient(transparent 58%,rgba(255,211,78,.6) 0);color:inherit;padding:0 2px;border-radius:2px;}
 
   /* 对比托盘 */
   .compare-tray{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;max-width:min(960px,94vw);}
@@ -705,11 +705,11 @@
   .plan-notes li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);list-style:none;}
   .plan-notes{margin:0;padding:0;}
   .plan-notes b{font-size:13px;color:var(--ink);}
-  .plan-notes .pn-snip{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--ink-soft);}
+  .plan-notes .pn-snip{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--ink-soft);}
   .plan-notes .pn-date{font-size:12px;color:var(--muted);white-space:nowrap;}
   .pn-open{border:1px solid var(--line-strong);border-radius:8px;background:transparent;color:var(--accent);font-size:12px;padding:4px 10px;cursor:pointer;}
   .pn-open:hover{border-color:var(--accent);}
-  .plan-empty{font-size:12.5px;color:var(--muted);padding:10px 0;}
+  .plan-empty{font-size:12px;color:var(--muted);padding:10px 0;}
   /* —— 站内轻提示（替代 alert，与全站风格一致） —— */
   .toast-wrap{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:90;
     display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(420px,92vw);}
@@ -728,7 +728,7 @@
   /* 单课模式：笔记编辑 + 打卡 + 提醒 */
   .plan-course-head{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px;flex-wrap:wrap;}
   .plan-course-head b{font-family:var(--font-serif);font-size:17px;color:var(--ink);}
-  .plan-course-head span{font-size:12.5px;color:var(--muted);}
+  .plan-course-head span{font-size:12px;color:var(--muted);}
   .plan-textarea{width:100%;min-height:120px;resize:vertical;margin:10px 0 12px;padding:10px 12px;border-radius:10px;
     border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font:13.5px/1.7 var(--font-sans);}
   .plan-textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent);}
@@ -784,7 +784,7 @@
   [data-density="compact"] .banner-teacher strong{font-size:14px;}
   [data-density="compact"] .banner-name{font-size:23px;}
   [data-density="compact"] .card-body{padding:8px 12px 12px;}
-  [data-density="compact"] .card-body .meta{margin-bottom:1px;font-size:12px;}
+  [data-density="compact"] .card-body .meta{margin-bottom:2px;font-size:12px;}
   [data-density="compact"] .card-body .intro{display:none;}
   [data-density="compact"] .badges{margin:8px 0 6px;gap:5px;}
   [data-density="compact"] .review{font-size:12px;margin:6px 0 8px;}
@@ -873,12 +873,12 @@
   .path-body{border-top:1px solid var(--line);padding:14px 16px 18px;}
   .path-body h4{margin:14px 0 8px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
   .path-body h4:first-child{margin-top:0;}
-  .path-body ul{margin:0 0 14px;padding-left:18px;color:var(--ink-soft);font-size:12.5px;line-height:1.6;}
+  .path-body ul{margin:0 0 14px;padding-left:18px;color:var(--ink-soft);font-size:12px;line-height:1.6;}
   .path-node{padding:10px 0;border-top:1px dashed var(--line);}
   .path-node:first-of-type{border-top:0;}
   .path-node.is-done{opacity:.62;}
   .path-node-head{display:flex;align-items:start;gap:9px;}
-  .path-node-check{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--accent);}
+  .path-node-check{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--accent);}
   .path-node b{display:block;font-size:13px;margin-bottom:4px;}
   .path-node p{margin:0;color:var(--muted);font-size:12px;line-height:1.55;}
   .path-node-actions{display:flex;align-items:center;gap:8px;margin:8px 0 0 29px;}
@@ -902,7 +902,7 @@
     transition:.2s;
   }
   .recs-toggle:hover{ border-color:var(--accent); transform:translateY(-1px); box-shadow:var(--shadow); }
-  .recs-hint{ font-family:var(--font-sans); font-weight:600; font-size:12.5px; color:var(--muted); }
+  .recs-hint{ font-family:var(--font-sans); font-weight:600; font-size:12px; color:var(--muted); }
   .recs-panel{ margin-top:16px; }
   .recs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;}
   @media (max-width:720px){.recs-grid{grid-template-columns:1fr;}}
