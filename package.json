@@ -1,0 +1,31 @@
+{
+  "name": "humanities-courses",
+  "version": "0.2.6-p1.6",
+  "private": true,
+  "description": "人文学科公开课程策展与样板学习路径 P1.6 双轮审计与公网发布版",
+  "scripts": {
+    "build:data": "node tools/build-data-script.js",
+    "check:data": "node tools/build-data-script.js --check",
+    "build:core": "node tools/build-core-candidates.js",
+    "build:site": "node tools/build-site.js",
+    "check:core": "node tools/build-core-candidates.js --check",
+    "migrate:p1": "node tools/migrate-p1-data.js",
+    "audit:offline": "node tools/audit-links.js --offline",
+    "audit:network": "node tools/audit-links.js --network",
+    "audit:plan": "node tools/audit-plan-alignment.js",
+    "audit:round2": "node tools/second-round-audit.js",
+    "audit:symbols": "node tools/audit-symbols.js",
+    "validate": "node tools/validate-project.js",
+    "test": "npm run check:data && npm run check:core && npm run validate && npm run audit:symbols && npm run audit:plan && npm run audit:offline && npm run audit:round2",
+    "test:browser": "node tools/browser-smoke.mjs",
+    "test:site": "node tools/browser-smoke.mjs --site-root dist",
+    "verify": "npm test && npm run test:browser",
+    "verify:site": "npm run build:site && node -e \"const fs=require('fs'); for (const f of ['index.html','data/courses.js','data/paths.js','_headers','_redirects','robots.txt','.nojekyll']) if(!fs.existsSync('dist/'+f)) process.exit(1); console.log('静态站点产物通过')\" && npm run test:site",
+    "test:replica": "node tools/replica-smoke.js",
+    "verify:full": "npm run verify && npm run verify:site && npm run test:replica",
+    "release": "node tools/build-release.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

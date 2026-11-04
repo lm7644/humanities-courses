@@ -1,0 +1,28 @@
+# 本地门禁 CI：把 npm test 的零网络检查接入持续集成。
+# npm test 共 7 条本地门禁，全部零网络、零浏览器依赖：
+#   1) check:data        数据一致性（courses.js/paths.js 与 JSON 源一致）
+#   2) check:core        核心候选清单与数据一致
+#   3) validate          Schema 与业务门禁（字段/状态/唯一 ID/URL/引用闭合）
+#   4) audit:symbols     符号字形扫描（禁 emoji 作功能图标）
+#   5) audit:plan        计划一致性（外部参考对象工程落点）
+#   6) audit:offline     离线巡检（URL 有效性与重复）
+#   7) audit:round2      第二轮独立汇总审计
+# 浏览器回归依赖 Chrome，不在本 CI 执行（由维护者本地或发布链路验证）。
+name: CI
+on:
+  push:
+    branches: [main, master]
+    paths-ignore: ["**/*.md", "docs/**", "validation/**"]
+  pull_request:
+    branches: [main, master]
+permissions:
+  contents: read
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - run: npm test

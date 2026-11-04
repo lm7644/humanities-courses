@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/humanities-courses/reference-adoption.schema.json",
+  "title": "External Reference Adoption Ledger",
+  "type": "object",
+  "required": ["schema_version", "checked_at", "count", "entries"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "checked_at": { "type": "string", "minLength": 1 },
+    "count": { "type": "integer", "minimum": 1 },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "required": [
+        "reference_id", "name", "reference_type", "adoption_mode", "development_stage",
+        "engineering_location", "acceptance_criteria", "license_or_terms_source", "reuse_boundary",
+        "current_status", "trigger_condition", "evidence_url", "checked_at", "owner"
+      ],
+      "properties": {
+        "reference_id": { "type": "string", "pattern": "^ref-[a-z0-9-]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "reference_type": { "enum": ["method_reference", "competitor_observation", "source_platform", "primary_resource"] },
+        "adoption_mode": { "enum": ["method_only", "metadata_only", "link_only", "resource_candidate", "competitor_observation", "deferred", "excluded"] },
+        "development_stage": { "enum": ["p1_governance", "p2_path", "p3_pilot", "p4_conditional", "observation_only"] },
+        "engineering_location": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "acceptance_criteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "license_or_terms_source": { "type": ["string", "null"] },
+        "reuse_boundary": { "type": "string", "minLength": 1 },
+        "current_status": { "enum": ["adopted", "planned", "deferred", "excluded", "blocked_pending_license_review", "observation_only"] },
+        "trigger_condition": { "type": ["string", "null"] },
+        "evidence_url": { "type": "string", "format": "uri" },
+        "checked_at": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

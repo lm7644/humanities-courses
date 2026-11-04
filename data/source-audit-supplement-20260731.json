@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-07-31",
+  "scope": "第二轮替代入口候选核验",
+  "count": 3,
+  "boundaries": [
+    "候选课程名相近不能证明与原策展项为同一课程",
+    "只有标题、教师身份和课程范围均有页面证据时才恢复入口",
+    "入口恢复不等于上传授权、长期可用性或教师学术审定完成"
+  ],
+  "entries": [
+    {
+      "id": "hc-015",
+      "decision": "unavailable",
+      "source_title": "【汉语言文学-整理中】《二十世纪西方思想文化潮流 刘擎（华东师范大学）》",
+      "source_author": "YW-GJJJPK 国家级精品课-语文",
+      "access_mode": "free",
+      "method": "bilibili-public-api-and-page-list",
+      "checked_at": "2026-07-31",
+      "evidence": "候选BV1op4y1r7EM为另一门16讲整理中课程，页面列出18个分P，与原策展项约30讲不一致；不作为替代入口。",
+      "academic_verification": "not_completed"
+    },
+    {
+      "id": "hc-023",
+      "decision": "unavailable",
+      "source_title": "北京大学 比较文学",
+      "source_author": "雨沐流苏",
+      "access_mode": "free",
+      "method": "bilibili-public-api-and-page-list",
+      "checked_at": "2026-07-31",
+      "evidence": "候选BV134411R7TN共有27个分P，但标题、简介和分P名称均未提供主讲教师身份，不能据此认定为乐黛云课程；继续阻断。",
+      "academic_verification": "not_completed"
+    },
+    {
+      "id": "hc-045",
+      "decision": "available",
+      "source_title": "美学原理-北京大学：叶朗",
+      "source_author": "小星星的笔记",
+      "access_mode": "free",
+      "method": "bilibili-public-api-and-page-list",
+      "checked_at": "2026-07-31",
+      "evidence": "候选BV1bE411D7Y9页面明确课程名、北京大学与叶朗，B站公开API返回34个分P及从‘什么是美学’到‘人生境界’的逐讲标题；恢复外部入口并纠正为34讲。",
+      "academic_verification": "not_completed"
+    }
+  ]
+}

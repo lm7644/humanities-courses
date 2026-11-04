@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "paths": [
+    {
+      "id": "path-example",
+      "title": "样板学习路径",
+      "subtitle": "从问题到成果",
+      "status": "draft_requires_academic_review",
+      "duration_weeks": 4,
+      "audience": "目标学习者",
+      "core_question": "这条路径最终回答什么问题？",
+      "outcomes": ["提交一个可检查的学习成果"],
+      "nodes": [
+        {
+          "id": "path-example-w1-course",
+          "week": 1,
+          "type": "course",
+          "title": "课程节点",
+          "description": "说明为何选择此课以及只学习哪些内容。",
+          "course_ids": ["hc-001"],
+          "scope_status": "pending_lesson_index",
+          "evidence": "完成带时间戳或引文的学习札记"
+        },
+        {
+          "id": "path-example-w2-primary",
+          "week": 2,
+          "type": "primary_source",
+          "title": "原典节点",
+          "description": "指定版本、章节和阅读问题。",
+          "course_ids": [],
+          "scope_status": "not_applicable",
+          "evidence": "提交带引文的细读札记"
+        }
+      ],
+      "review_gate": {
+        "required_reviewers": 2,
+        "required_roles": ["相关学科教师", "课程设计复核者"]
+      }
+    }
+  ]
+}

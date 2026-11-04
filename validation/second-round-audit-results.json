@@ -1,0 +1,115 @@
+{
+  "generated_at": "2026-11-03T17:58:24.024Z",
+  "round": 2,
+  "baseline": "动态推导（课程数/可跳转/阻断/核心候选口径均不硬编码）",
+  "summary": {
+    "checks": 20,
+    "passed": 20,
+    "failed": 0,
+    "warnings": 0
+  },
+  "checks": [
+    {
+      "name": "课程与入口口径",
+      "passed": true,
+      "evidence": "课程205、可跳转183、阻断22（恒等式成立）"
+    },
+    {
+      "name": "稳定身份",
+      "passed": true,
+      "evidence": "ID 唯一 205/205，URL 唯一 205/205"
+    },
+    {
+      "name": "学术边界",
+      "passed": true,
+      "evidence": "人工学术核验 0 门，5 条路径保持草案状态"
+    },
+    {
+      "name": "阻断闭合",
+      "passed": true,
+      "evidence": "阻断 22 门均非核心候选且 editorial_status=blocked"
+    },
+    {
+      "name": "路径引用闭合",
+      "passed": true,
+      "evidence": "5 条路径引用均为未阻断核心候选"
+    },
+    {
+      "name": "无夸大策展语",
+      "passed": true,
+      "evidence": "课程介绍与编辑观点不含绝对化推荐语"
+    },
+    {
+      "name": "叶朗替代入口证据",
+      "passed": true,
+      "evidence": "hc-045 应有 34 讲证据并恢复入口"
+    },
+    {
+      "name": "相似课程不冒充",
+      "passed": true,
+      "evidence": "刘擎与乐黛云候选证据不足时继续阻断"
+    },
+    {
+      "name": "计划与参考对象",
+      "passed": true,
+      "evidence": "7 项采用机制有工程证据，5 项保持许可阻断"
+    },
+    {
+      "name": "桌面高密度",
+      "passed": true,
+      "evidence": "完整可见4门，首卡顶部56px"
+    },
+    {
+      "name": "入口筛选语义",
+      "passed": true,
+      "evidence": "筛选183、标签183，应等于可跳转 183 门"
+    },
+    {
+      "name": "风险出口闭合",
+      "passed": true,
+      "evidence": "禁链22（应等于阻断 22）、对比漏链0"
+    },
+    {
+      "name": "移动端布局",
+      "passed": true,
+      "evidence": "宽度390/390、触控44px、重叠0"
+    },
+    {
+      "name": "运行时稳定",
+      "passed": true,
+      "evidence": "运行时错误0"
+    },
+    {
+      "name": "学习规划面板",
+      "passed": true,
+      "evidence": "单课面板可开、热力图182 格、移动端笔记已保存"
+    },
+    {
+      "name": "联网报告数据版本",
+      "passed": true,
+      "evidence": "联网报告对应当前 courses.json"
+    },
+    {
+      "name": "联网结果",
+      "passed": true,
+      "evidence": "可访问课程失效0、标题漂移0、过期0"
+    },
+    {
+      "name": "统一禁链函数",
+      "passed": true,
+      "evidence": "卡片、筛选和对比出口应共用禁链判断"
+    },
+    {
+      "name": "前台无治理术语",
+      "passed": true,
+      "evidence": "源码仅在剥离词表出现，页面可见治理标签 0 处"
+    },
+    {
+      "name": "文档引用的命令存在",
+      "passed": true,
+      "evidence": "3 份主文档引用的 node tools/* 与 npm run * 均存在"
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

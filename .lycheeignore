@@ -1,0 +1,32 @@
+# 课程外链不走 lychee：B 站 / 慕课平台会反爬或登录墙，误报率高。
+# 这些 URL 由 npm run audit:network 专项核验（B 站公开 API + HTTP 可达 + 标题漂移）。
+https://www.bilibili.com/
+https://bilibili.com/
+https://www.icourse163.org/
+https://icourse163.org/
+https://www.chinaooc.com.cn/
+https://chinaooc.com.cn/
+https://www.icourse163.com/
+https://www.xuetangx.com/
+https://www.coursera.org/
+https://www.edx.org/
+https://higher.smartedu.cn/
+https://www.ximalaya.com/
+https://ximalaya.com/
+https://mooc1.chaoxing.com/
+https://open.163.com/
+https://163.com/
+https://www.khanacademy.org/
+
+# 构建产物与备份不入库、也不扫
+**/dist/**
+**/*.bak*
+**/covers/**
+**/release/**
+**/deliverables/**
+**/vibex-handoff/**
+
+# 本地/占位
+http://127.0.0.1
+http://localhost
+https://legacy.invalid/

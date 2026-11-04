@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-07-30",
+  "count": 12,
+  "entries": [
+    {
+      "reference_id": "ref-ossu-cs",
+      "name": "OSSU Computer Science",
+      "reference_type": "method_reference",
+      "adoption_mode": "method_only",
+      "development_stage": "p2_path",
+      "engineering_location": [
+        "data/paths.json",
+        "data/path.schema.json"
+      ],
+      "acceptance_criteria": [
+        "路径节点具有先后顺序、学习证据和成果任务",
+        "路径发布前完成讲次核对与教师审定"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴先修顺序、核心/进阶和项目成果的组织思想；当前实现未复制仓库代码、数据、文本、图标或界面资产。代码复制须另做许可证与依赖审查。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://github.com/ossu/computer-science",
+      "checked_at": "2026-07-29",
+      "owner": "项目编辑"
+    },
+    {
+      "reference_id": "ref-cs-self-learning",
+      "name": "CS自学指南",
+      "reference_type": "method_reference",
+      "adoption_mode": "method_only",
+      "development_stage": "p1_governance",
+      "engineering_location": [
+        "data/courses.json",
+        "docs/P1内容治理与教师共建规则.md",
+        "tools/validate-project.js"
+      ],
+      "acceptance_criteria": [
+        "课程使用稳定ID和结构化数据",
+        "纠错、更新和阻断规则可执行"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴中文学习路线与社区维护思想；当前实现未复制仓库代码、数据、文本、图标或界面资产。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://github.com/PKUFlyingPig/cs-self-learning",
+      "checked_at": "2026-07-29",
+      "owner": "项目编辑"
+    },
+    {
+      "reference_id": "ref-hocbigg-literature",
+      "name": "Hocbigg Literature",
+      "reference_type": "method_reference",
+      "adoption_mode": "method_only",
+      "development_stage": "p2_path",
+      "engineering_location": [
+        "data/paths.json"
+      ],
+      "acceptance_criteria": [
+        "文学路径同时包含课程、原典、练习和成果证据",
+        "相关教师审定路径内容"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴课程、阅读与实践项目组合；当前实现未复制仓库代码、数据、文本、图标或界面资产。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://github.com/hocbigg/literature",
+      "checked_at": "2026-07-29",
+      "owner": "路径主编"
+    },
+    {
+      "reference_id": "ref-hocbigg-philosophy",
+      "name": "Hocbigg Philosophy",
+      "reference_type": "method_reference",
+      "adoption_mode": "method_only",
+      "development_stage": "p2_path",
+      "engineering_location": [
+        "data/paths.json"
+      ],
+      "acceptance_criteria": [
+        "理论路径明确问题、原典、课程和反思任务",
+        "相关教师审定路径内容"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴专题、先修与实践结构；当前实现未复制仓库代码、数据、文本、图标或界面资产。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://github.com/hocbigg/philosophy",
+      "checked_at": "2026-07-29",
+      "owner": "路径主编"
+    },
+    {
+      "reference_id": "ref-open-learning-paths",
+      "name": "Open Learning Paths",
+      "reference_type": "method_reference",
+      "adoption_mode": "method_only",
+      "development_stage": "p2_path",
+      "engineering_location": [
+        "data/paths.json",
+        "index.html",
+        "tools/browser-smoke.mjs"
+      ],
+      "acceptance_criteria": [
+        "路径可以展开、记录本地进度并定位课程",
+        "节点引用合法且浏览器回归通过"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴开放路径的数据化表达；当前实现未复制仓库代码、数据、文本、图标或界面资产。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://github.com/BenutzerEinsZweiDrei/Open-Learning-Paths",
+      "checked_at": "2026-07-29",
+      "owner": "前端与路径编辑"
+    },
+    {
+      "reference_id": "ref-class-central",
+      "name": "Class Central",
+      "reference_type": "competitor_observation",
+      "adoption_mode": "metadata_only",
+      "development_stage": "p1_governance",
+      "engineering_location": [
+        "data/course.schema.json",
+        "data/courses.json"
+      ],
+      "acceptance_criteria": [
+        "课程记录来源、访问状态和最后核验日期",
+        "不抓取或镜像受限页面内容"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴跨平台聚合字段并保存本项目独立核验的元数据；不复制页面、简介、评价、品牌或数据集。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://www.classcentral.com/",
+      "checked_at": "2026-07-29",
+      "owner": "来源审核员"
+    },
+    {
+      "reference_id": "ref-open-culture",
+      "name": "Open Culture",
+      "reference_type": "competitor_observation",
+      "adoption_mode": "link_only",
+      "development_stage": "p1_governance",
+      "engineering_location": [
+        "data/course.schema.json",
+        "data/courses.json"
+      ],
+      "acceptance_criteria": [
+        "外部入口与免费范围分别记录",
+        "项目不托管外部课程内容"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "仅借鉴链接型策展与免费范围说明方式；不复制其课程清单、文章、图片或页面设计。",
+      "current_status": "adopted",
+      "trigger_condition": null,
+      "evidence_url": "https://www.openculture.com/freeonlinecourses",
+      "checked_at": "2026-07-29",
+      "owner": "来源审核员"
+    },
+    {
+      "reference_id": "ref-oer-commons",
+      "name": "OER Commons",
+      "reference_type": "primary_resource",
+      "adoption_mode": "resource_candidate",
+      "development_stage": "p3_pilot",
+      "engineering_location": [
+        "data/course.schema.json",
+        "data/reference-adoption.json"
+      ],
+      "acceptance_criteria": [
+        "每项资源记录具体许可证和允许的引用或改编范围",
+        "未完成授权核验的材料不得进入路径正文"
+      ],
+      "license_or_terms_source": "https://oercommons.org/about",
+      "reuse_boundary": "当前只采用权利、材料和证书元数据字段；具体OER内容须逐项核验许可证后才能链接、引用或改编。",
+      "current_status": "blocked_pending_license_review",
+      "trigger_condition": "三条样板路径进入教师审定前，各选择不超过5项候选资源逐项审查。",
+      "evidence_url": "https://oercommons.org/curated-collections/399",
+      "checked_at": "2026-07-29",
+      "owner": "内容与版权审核员"
+    },
+    {
+      "reference_id": "ref-mit-ocw",
+      "name": "MIT OpenCourseWare",
+      "reference_type": "primary_resource",
+      "adoption_mode": "resource_candidate",
+      "development_stage": "p3_pilot",
+      "engineering_location": [
+        "data/reference-adoption.json",
+        "data/paths.json"
+      ],
+      "acceptance_criteria": [
+        "记录具体资源URL、资源类型、许可证或条款和引用方式",
+        "仅在许可范围内链接、引用或改编"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "当前仅列为待接入一手资源，不整体导入；课程页、讲义、图像和媒体须逐项核验许可。",
+      "current_status": "blocked_pending_license_review",
+      "trigger_condition": "样板路径进入教师审定时，各路径最多选择5项一手资源人工核验。",
+      "evidence_url": "https://ocw.mit.edu/",
+      "checked_at": "2026-07-29",
+      "owner": "内容与版权审核员"
+    },
+    {
+      "reference_id": "ref-open-yale",
+      "name": "Open Yale Courses",
+      "reference_type": "primary_resource",
+      "adoption_mode": "resource_candidate",
+      "development_stage": "p3_pilot",
+      "engineering_location": [
+        "data/reference-adoption.json",
+        "data/paths.json"
+      ],
+      "acceptance_criteria": [
+        "分别核验课程页、视频和讲稿的使用边界",
+        "资源失效时有明确反馈与替换记录"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "当前仅列为待接入一手资源，不整体导入；课程页面、视频、讲稿等分别核验许可。",
+      "current_status": "blocked_pending_license_review",
+      "trigger_condition": "样板路径进入教师审定时，各路径最多选择5项一手资源人工核验。",
+      "evidence_url": "https://oyc.yale.edu/courses",
+      "checked_at": "2026-07-29",
+      "owner": "内容与版权审核员"
+    },
+    {
+      "reference_id": "ref-sep",
+      "name": "Stanford Encyclopedia of Philosophy",
+      "reference_type": "primary_resource",
+      "adoption_mode": "resource_candidate",
+      "development_stage": "p3_pilot",
+      "engineering_location": [
+        "data/reference-adoption.json",
+        "data/paths.json"
+      ],
+      "acceptance_criteria": [
+        "条目仅作为参考知识链接并保留作者与版本信息",
+        "引用范围与官方版权说明一致"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "SEP是参考知识资源，不等同于开放教材；当前仅作待接入链接候选，不复制完整条目。",
+      "current_status": "blocked_pending_license_review",
+      "trigger_condition": "文学理论或哲学路径进入教师审定且需要权威概念条目时逐项核验。",
+      "evidence_url": "https://plato.stanford.edu/",
+      "checked_at": "2026-07-29",
+      "owner": "内容与版权审核员"
+    },
+    {
+      "reference_id": "ref-openstax",
+      "name": "OpenStax",
+      "reference_type": "primary_resource",
+      "adoption_mode": "resource_candidate",
+      "development_stage": "p3_pilot",
+      "engineering_location": [
+        "data/reference-adoption.json",
+        "data/paths.json"
+      ],
+      "acceptance_criteria": [
+        "每本教材及其媒体资产分别记录许可证和署名要求",
+        "只采用与样板路径目标直接相关的资源"
+      ],
+      "license_or_terms_source": null,
+      "reuse_boundary": "当前仅列为待接入教材候选；不同教材与媒体资产可能具有不同许可，不能整体推定可复用。",
+      "current_status": "blocked_pending_license_review",
+      "trigger_condition": "样板路径需要补充开放教材且教师确认其学术适配时逐项核验。",
+      "evidence_url": "https://openstax.org/subjects",
+      "checked_at": "2026-07-29",
+      "owner": "内容与版权审核员"
+    }
+  ]
+}

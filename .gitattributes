@@ -1,0 +1,8 @@
+# 统一换行：CSP hash 按文件字节计算，换行符漂移（Windows autocrlf）会导致
+# dist 的内联脚本 hash 与浏览器解析后的文本不匹配，脚本被静默拒绝执行。
+# 根源修复见 2026-11-04 审美优化轮：index.html 统一 LF + 本文件锁定。
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
+*.zip binary

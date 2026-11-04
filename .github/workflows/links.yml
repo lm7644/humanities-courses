@@ -1,0 +1,108 @@
+# 双轨死链巡检。
+# 轨 1：lychee 扫仓库内 md/html 静态链接（不含课程外链，课程外链走轨 2）。
+# 轨 2：npm run audit:network（B 站 API 标题核验 + bigram 漂移 + 90 天过期）。
+# 失败时建 issue，不替代人工内容复核。
+# 来源：lycheeverse/lychee-action 官方模板（Apache-2.0/MIT），SHA pinning + dependabot。
+# 前提：仓库已推到 GitHub。本 workflow 在本地仓库中为惰性文件。
+name: Links
+on:
+  schedule:
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - "**/*.md"
+      - "**/*.html"
+      - "data/courses.json"
+      - ".lycheeignore"
+      - ".github/workflows/links.yml"
+      - "tools/audit-links.js"
+permissions:
+  issues: write
+  contents: read
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Restore lychee cache
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: .lycheecache
+          key: lychee-${{ github.sha }}
+          restore-keys: lychee-
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --cache --max-cache-age 1d --verbose --no-progress './**/*.md' './**/*.html'
+          fail: false
+      - name: Create Issue From File
+        if: steps.lychee.outputs.exit_code != '0'
+        uses: peter-evans/create-issue-from-file@e8ef132d6df98ed982188e460ebb3b5d4ef3a9cd # v5.0.1
+        with:
+          title: 静态链接巡检发现失效链接
+          content-filepath: ./lychee/out.md
+          labels: report, automated issue
+
+  courseLinks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Audit course external links
+        id: audit
+        run: |
+          set +e
+          npm run audit:network
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          node -e '
+            const fs = require("fs");
+            const p = "validation/link-network-report.json";
+            if (!fs.existsSync(p)) { process.exit(0); }
+            const r = JSON.parse(fs.readFileSync(p, "utf8"));
+            const s = r.summary || {};
+            const lines = [
+              "# 课程外链联网巡检失败",
+              "",
+              "自动结果不能替代内容复核。以下为 `npm run audit:network` 汇总。",
+              "",
+              "| 项 | 数量 |",
+              "|---|---|",
+              `| 课程总数 | ${s.total ?? "-"} |`,
+              `| 唯一 URL | ${s.uniqueUrls ?? "-"} |`,
+              `| 可达 | ${s.reachable ?? "-"} |`,
+              `| 不可达 | ${s.unreachable ?? "-"} |`,
+              `| 无法判定 | ${s.inconclusive ?? "-"} |`,
+              `| 标题漂移 | ${s.titleDrift ?? "-"} |`,
+              `| 可访问但不可达 | ${s.availableUnreachable ?? "-"} |`,
+              `| 本地错误 | ${s.localErrors ?? "-"} |`,
+              `| 重复 URL | ${s.duplicateUrls ?? "-"} |`,
+              "",
+              "完整报告见本次 run 的 artifact：`validation/link-network-report.json`。",
+              ""
+            ];
+            fs.mkdirSync("lychee", { recursive: true });
+            fs.writeFileSync("lychee/course-audit.md", lines.join("\n"));
+          '
+          exit 0
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: link-network-report
+          path: validation/link-network-report.json
+          if-no-files-found: ignore
+      - name: Create Issue From File
+        if: steps.audit.outputs.exit_code != '0'
+        uses: peter-evans/create-issue-from-file@e8ef132d6df98ed982188e460ebb3b5d4ef3a9cd # v5.0.1
+        with:
+          title: 课程外链巡检失败
+          content-filepath: ./lychee/course-audit.md
+          labels: report, automated issue
+      - name: Fail job on audit error
+        if: steps.audit.outputs.exit_code != '0'
+        run: exit 1

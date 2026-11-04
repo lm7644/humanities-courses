@@ -1,0 +1,28 @@
+# ===== 部署 / 平台产物 =====
+.env
+.edgeone/*
+.tef_dist/*
+dist/
+
+# ===== 大体积资源（不入库，另行冷归档到项目外） =====
+# covers/ 17M、release/ 7.7M、deliverables/ 31M，均为构建/导出产物或素材，非源码
+covers/
+release/
+deliverables/
+
+# ===== 临时 / 备份 =====
+*.bak*
+.DS_Store
+
+# ===== 历史交付残留（已冷归档到 ../chat-1-archive/2026-10-07/，不再入库） =====
+validation/p0-*.png
+validation/public-*.png
+validation/p0-browser-results.json
+validation/public-smoke-results.json
+vibex-handoff/
+
+# ===== 依赖（本项目为原生 JS 单文件，运行时无 node_modules；tools/ 仅开发期使用） =====
+node_modules/
+
+# ===== CI 缓存 =====
+.lycheecache/

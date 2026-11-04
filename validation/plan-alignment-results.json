@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-11-03T17:58:23.645Z",
+  "phase_state": {
+    "p0_local_remediation": "complete_local_only",
+    "p1_engineering_and_source_entry_audit": "complete_one_round",
+    "p1_academic_verification": "not_started",
+    "p2_learning_paths": "draft_requires_academic_review",
+    "p3_user_pilot": "not_started"
+  },
+  "reference_summary": {
+    "total": 12,
+    "adopted": 7,
+    "blocked_pending_license_review": 5
+  },
+  "evidence": [
+    {
+      "reference": "OSSU Computer Science",
+      "location": "data/paths.json、data/path.schema.json",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "CS自学指南",
+      "location": "data/courses.json、docs/P1内容治理与教师共建规则.md、tools/validate-project.js",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "Hocbigg Literature",
+      "location": "data/paths.json",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "Hocbigg Philosophy",
+      "location": "data/paths.json",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "Open Learning Paths",
+      "location": "data/paths.json、index.html、tools/browser-smoke.mjs",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "Class Central",
+      "location": "data/course.schema.json、data/courses.json",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "Open Culture",
+      "location": "data/course.schema.json、data/courses.json",
+      "proof": "当前采用机制已在代码、数据和回归中找到对应证据"
+    },
+    {
+      "reference": "OER Commons",
+      "location": "data/reference-adoption.json",
+      "proof": "保持许可阻断，未进入当前课程与路径正文"
+    },
+    {
+      "reference": "MIT OpenCourseWare",
+      "location": "data/reference-adoption.json",
+      "proof": "保持许可阻断，未进入当前课程与路径正文"
+    },
+    {
+      "reference": "Open Yale Courses",
+      "location": "data/reference-adoption.json",
+      "proof": "保持许可阻断，未进入当前课程与路径正文"
+    },
+    {
+      "reference": "Stanford Encyclopedia of Philosophy",
+      "location": "data/reference-adoption.json",
+      "proof": "保持许可阻断，未进入当前课程与路径正文"
+    },
+    {
+      "reference": "OpenStax",
+      "location": "data/reference-adoption.json",
+      "proof": "保持许可阻断，未进入当前课程与路径正文"
+    }
+  ],
+  "errors": []
+}

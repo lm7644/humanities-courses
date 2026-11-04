@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 2,
+  "auditVersion": "0.2.0-p1",
+  "generatedAt": "2026-11-03T17:58:23.822Z",
+  "mode": "offline",
+  "dataFile": "data/courses.json",
+  "dataSha256": "d1fb4ec0317bf4864daaf9eeb4f5103a61c05e58721164f58a483725e051966c",
+  "summary": {
+    "total": 205,
+    "uniqueUrls": 205,
+    "localErrors": 0,
+    "duplicateUrls": 0,
+    "staleRecords": 0
+  },
+  "localErrors": [],
+  "duplicateUrls": []
+}
