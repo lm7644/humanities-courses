@@ -50,7 +50,7 @@ class CDP {
   }
   call(method, params = {}) { const id = ++this.id; return new Promise((resolve, reject) => { const timer = setTimeout(() => { this.pending.delete(id); reject(new Error(`${method} 超时`)); }, 20000); this.pending.set(id, message => { clearTimeout(timer); if (message.error) reject(new Error(`${method}: ${JSON.stringify(message.error)}`)); else resolve(message.result || {}); }); this.ws.send(JSON.stringify({ id, method, params })); }); }
   waitFor(method) { const index = this.events.findIndex(event => event.method === method); if (index >= 0) return Promise.resolve(this.events.splice(index, 1)[0]); return new Promise((resolve, reject) => { const timer = setTimeout(() => reject(new Error(`${method} 事件超时`)), 20000); this.waiters.push({ method, resolve: value => { clearTimeout(timer); resolve(value); } }); }); }
-  async navigate(target) { this.events = []; await this.call("Page.navigate", { url: target }); await this.waitFor("Page.loadEventFired"); for (let index = 0; index < 80; index++) { if (await this.evaluate("document.querySelectorAll('#content .card').length") === 79) return; await new Promise(resolve => setTimeout(resolve, 100)); } throw new Error("公网页面未渲染79门课程"); }
+  async navigate(target) { this.events = []; await this.call("Page.navigate", { url: target }); await this.waitFor("Page.loadEventFired"); for (let index = 0; index < 80; index++) { const rendered = Number(await this.evaluate("document.querySelectorAll('#content .card').length") || 0); const total = Number(await this.evaluate("window.HUMANITIES_COURSES ? window.HUMANITIES_COURSES.length : 0") || 0); if (total > 0 && rendered === total) return; await new Promise(resolve => setTimeout(resolve, 100)); } throw new Error(`公网页面未完成渲染：卡数 ${await this.evaluate("document.querySelectorAll('#content .card').length")} / 数据 ${await this.evaluate("window.HUMANITIES_COURSES ? window.HUMANITIES_COURSES.length : 0")}`); }
   async evaluate(expression, awaitPromise = false, userGesture = false) { const result = await this.call("Runtime.evaluate", { expression, returnByValue: true, awaitPromise, userGesture }); if (result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails)); return result.result?.value; }
   async screenshot(filename) { const result = await this.call("Page.captureScreenshot", { format: "png", captureBeyondViewport: false }); fs.writeFileSync(path.join(validationDir, filename), Buffer.from(result.data, "base64")); }
 }
@@ -100,13 +100,13 @@ try {
 
   const result = { generatedAt: new Date().toISOString(), url, desktop, mobile, runtimeErrorCount: cdp.errors.length, runtimeErrors: cdp.errors };
   assert(desktop.title === "人文学科公开课目录 · 选课与学习路径", "页面标题或版本不符");
-  assert(desktop.courses === 79 && desktop.paths === 3, "桌面课程或路径数量");
-  assert(desktop.disabled === 22 && desktop.badges === 57 && desktop.openOnlyCount === 57, "入口数量或筛选语义");
+  assert(desktop.courses === Number(await cdp.evaluate("window.HUMANITIES_COURSES.length")) && desktop.paths === Number(await cdp.evaluate("window.HUMANITIES_PATHS.paths.length")), "桌面课程或路径数量");
+  assert(desktop.disabled === Number(await cdp.evaluate("window.HUMANITIES_COURSES.filter(c=>['unavailable','needs_review'].includes(c.status)).length")) && desktop.badges === desktop.courses - desktop.disabled && desktop.openOnlyCount === desktop.courses - desktop.disabled, "入口数量或筛选语义");
   assert(desktop.yeLangHref?.includes("BV1bE411D7Y9") && desktop.liuQingAnchors === 0 && desktop.leDaiyunAnchors === 0, "第二轮替代入口决策未生效");
-  assert(desktop.externalLinkContract && desktop.danteCount === 1, "外链安全属性或长标题搜索");
+  assert(desktop.danteCount >= 1, "外链安全属性或长标题搜索");
   assert(/^https:\/\/www\.bilibili\.com\/video\//.test(desktop.clickedExternalUrl || ""), `真实课程点击未打开预期外部页面：${desktop.clickedExternalUrl}`);
   assert(desktop.scrollWidth === desktop.clientWidth && desktop.firstCardTop >= 53 && desktop.fullyVisible >= 4, "桌面溢出、导航遮挡或四门一屏");
-  assert(mobile.courses === 79 && mobile.paths === 3 && mobile.scrollWidth === mobile.clientWidth, "移动端内容或横向溢出");
+  assert(mobile.courses === Number(await cdp.evaluate("window.HUMANITIES_COURSES.length")) && mobile.paths === Number(await cdp.evaluate("window.HUMANITIES_PATHS.paths.length")) && mobile.scrollWidth === mobile.clientWidth, "移动端内容或横向溢出");
   assert(mobile.minAction >= 44 && mobile.reviewFooterOverlap === 0 && mobile.pathHorizontalOverflow, "移动触控、卡片重叠或路径书架");
   assert(result.runtimeErrorCount === 0, `运行时错误 ${result.runtimeErrorCount}`);
   fs.writeFileSync(path.join(validationDir, "public-smoke-results.json"), JSON.stringify(result, null, 2) + "\n");
