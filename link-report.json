@@ -1,10 +1,10 @@
 {
   "schemaVersion": 2,
   "auditVersion": "0.2.0-p1",
-  "generatedAt": "2026-11-05T17:20:01.511Z",
+  "generatedAt": "2026-11-05T18:50:59.620Z",
   "mode": "offline",
   "dataFile": "data/courses.json",
-  "dataSha256": "46e38e377e9f5b3526f4d61d88aefb34629efa158b1ad2eda5a2ab4ef540960c",
+  "dataSha256": "052e3cb8884e9a7fea3cdd876a3e25a74c704f1345be90631a7461292a253a70",
   "summary": {
     "total": 205,
     "uniqueUrls": 205,

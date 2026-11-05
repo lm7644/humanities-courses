@@ -2056,6 +2056,8 @@ function altStatusText(c){
 // 卡片详情面板：系列条目（共 N P · 约 X 小时）/ 技法 / 载体 / 同课其他入口
 function detailHTML(c){
   const lines = [];
+  // 详情处一行披露：与页脚完整声明、列表跳转提示构成三处披露（页首常驻横幅已移除）
+  lines.push('<p class="detail-line detail-disclosure"><span class="lbl">说明</span>课程入口未经教师本人学术核验，跳转后请以原平台说明为准。</p>');
   if(c.series && c.series.total_pages){
     const hours = Math.max(1, Math.round((c.series.duration_seconds || 0) / 3600));
     const owner = c.series.up_owner ? ` · 来自「${escapeHTML(c.series.up_owner)}」的合集` : "";
@@ -2074,7 +2076,6 @@ function detailHTML(c){
       `<button type="button" class="alt-jump" data-alt-id="${escapeHTML(a.id)}">${escapeHTML(a.platform)} · ${altStatusText(a)}</button>`
     ).join("")}</p>`);
   }
-  if(!lines.length) return "";
   return `<div class="card-detail">${lines.join("")}</div>`;
 }
 // —— 核验信息与阻断原因的对外展示 ——
