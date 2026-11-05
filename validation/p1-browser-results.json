@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T16:36:44.662Z",
+  "generatedAt": "2026-11-05T17:19:18.126Z",
   "siteRoot": ".",
   "legacyArrayMigration": {
     "type": "hm-favs",
@@ -147,7 +147,7 @@
     "focusReturned": "ctCompare",
     "blockedCompareLinkCount": 0,
     "blockedCompareShowsDisabled": true,
-    "sharedUrl": "http://127.0.0.1:7189/",
+    "sharedUrl": "http://127.0.0.1:1545/",
     "shareLeakedToken": false,
     "shareLeakedFragment": false,
     "oldClaimsPresent": false,
@@ -167,11 +167,11 @@
     "courseViewportDiagnostic": {
       "scrollNavHeight": 54,
       "desiredCardTop": 56,
-      "absoluteCardTop": 2741.359375,
-      "requestedScrollY": 2685.359375,
-      "actualScrollY": 2685,
+      "absoluteCardTop": 2713.953125,
+      "requestedScrollY": 2657.953125,
+      "actualScrollY": 2658,
       "innerHeight": 900,
-      "scrollHeight": 44224
+      "scrollHeight": 44268
     },
     "fullyVisibleCourseCards": 4,
     "fullyVisibleNormalCards": 2,
@@ -191,25 +191,25 @@
       {
         "id": "hc-058",
         "top": 458,
-        "bottom": 791,
+        "bottom": 790,
         "height": 333
       },
       {
         "id": "hc-003",
         "top": 458,
-        "bottom": 844,
+        "bottom": 843,
         "height": 386
       },
       {
         "id": "hc-060",
-        "top": 860,
-        "bottom": 1193,
+        "top": 859,
+        "bottom": 1192,
         "height": 333
       },
       {
         "id": "hc-008",
-        "top": 860,
-        "bottom": 1193,
+        "top": 859,
+        "bottom": 1192,
         "height": 333
       }
     ],

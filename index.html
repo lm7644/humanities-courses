@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
-<meta name="description" content="跨平台人文学科公开课目录，支持课程检索、收藏、对比和四周学习路径。" />
+<meta name="description" content="跨平台人文学科公开课目录：205 门课程只整理公开入口与编辑判断，未经教师本人学术核验，不代表其本人或机构认可；支持检索、收藏、对比与四周学习路径。" />
 <title>人文学科公开课目录 · 选课与学习路径</title>
 <!-- 站点正式地址：全站唯一基址来源。迁移域名时只改下面的 canonical，
      tools/build-site.js 会从中读取基址生成 sitemap.xml 与结构化数据，无需改第二处。
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="人文学科公开课目录" />
 <meta property="og:title" content="人文学科公开课目录 · 选课与学习路径" />
-<meta property="og:description" content="跨平台人文学科公开课目录，支持课程检索、收藏、对比和四周学习路径。" />
+<meta property="og:description" content="跨平台人文学科公开课目录：205 门课程只整理公开入口与编辑判断，未经教师本人学术核验，不代表其本人或机构认可；支持检索、收藏、对比与四周学习路径。" />
 <meta property="og:url" content="https://lm7644.github.io/humanities-courses/" />
 <meta property="og:image" content="https://lm7644.github.io/humanities-courses/assets/og-cover.png" />
 <meta property="og:image:width" content="1200" />
@@ -1020,18 +1020,19 @@
   .hero-search input:focus-visible{outline:2px solid var(--accent-2);outline-offset:1px;}
   .hero-search .hero-action{border-radius:0 2px 2px 0;white-space:nowrap;}
 
-  /* 学术核验声明条：常驻页首，不随筛选消失 */
-  .disclosure{position:relative;z-index:3;background:var(--gold-bg);border-bottom:1px solid var(--gold-bd);}
-  .dc-inner{display:flex;align-items:flex-start;gap:12px;max-width:1360px;margin:0 auto;padding:11px 28px;}
-  .dc-tag{flex:none;padding:2px 8px;border:1px solid var(--gold-bd);border-radius:2px;color:var(--gold);font:700 11px/1.6 var(--font-sans);letter-spacing:.06em;white-space:nowrap;}
-  .dc-text{color:var(--ink-soft);font-size:13px;line-height:1.6;}
-  .dc-text b{color:var(--ink);}
+  /* 学术核验披露：不再常驻页首，落在页脚（完整措辞）与卡片跳转处（一行小字） */
+  .foot-disclosure{
+    margin:0 0 12px;padding:10px 0 12px;border-bottom:1px dashed var(--line);
+    color:var(--ink-soft);font-size:13px;line-height:1.7;
+  }
+  .foot-disclosure b{color:var(--ink);}
+  .foot-disclosure .fd-tag{font-weight:700;color:var(--gold);letter-spacing:.04em;}
+  .jump-note{font-size:12px;line-height:1.6;color:var(--muted);margin:8px 0 0;}
   #courseExplorer{scroll-margin-top:64px;}
   @media(max-width:860px){.nav-filter-btn.nav-major{display:block;}.scroll-nav .mini-search{min-width:92px;}.scroll-top{min-width:48px;}}
   @media(max-width:560px){
     .hero-actions{display:grid;grid-template-columns:1fr;}.hero-action{justify-content:center;}
     .hero-search{max-width:none;}
-    .dc-inner{flex-direction:column;gap:6px;padding:10px 16px;}
     .hero-title .title-path{display:block;}
     .paths-block{padding-top:12px;overflow:hidden;}.path-grid{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:86%;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;padding-bottom:8px;scrollbar-width:thin;}.path-item{scroll-snap-align:start;}.path-item summary{min-height:0;}
     .notice{padding:12px 14px;}
@@ -1049,7 +1050,7 @@
 @media (max-width:560px){
   .review{font-size:16px;line-height:1.65;}
   .intro{font-size:16px;line-height:1.7;}
-  .dc-text{font-size:16px;line-height:1.6;}
+  .foot-disclosure{font-size:16px;line-height:1.7;}
   .path-note li,.path-note p,.blocked-note{font-size:16px;line-height:1.7;}
   .meta,.meta.teacher,.meta.verify,.meta.sched{font-size:13px;line-height:1.5;}
   .hero-action{min-height:44px;}
@@ -1119,14 +1120,6 @@
   <nav class="cat-index" aria-label="分类索引">
     <div class="cat-index-track" id="categoryFilters" role="group" aria-label="按分类筛选"></div>
   </nav>
-
-  <!-- 学术核验状态声明：数字由数据计算，避免文案与数据走失 -->
-  <div class="disclosure" role="note">
-    <div class="dc-inner">
-      <span class="dc-tag">未完成学术核验</span>
-      <span class="dc-text" id="disclosureText">本站 205 门课程中，经教师本人学术核验的为 0 门。目录只整理公开入口与编辑判断，<b>不代表教师本人或任职机构认可</b>；课程质量与讲次准确性请以原平台为准。</span>
-    </div>
-  </div>
 
   <div class="wrap">
 
@@ -1208,11 +1201,16 @@
     </div>
   </div>
 
+  <!-- 学术核验简短提示：落在课程列表/跳转处，页首不再常驻 -->
+  <p class="jump-note">课程入口均未经教师本人学术核验；跳转后请以原平台说明为准。</p>
+
   <!-- 课程展示区（由 JS 按分类渲染） -->
   <main id="content" tabindex="-1"></main>
 
   <footer>
-    课程入口、开放范围和收费方式可能随平台调整。本站只提供外部链接与编辑整理，不托管课程内容；学习前请以原平台当前页面为准。课程横幅为本站程序化视觉，并非原课程封面。
+    <!-- 学术核验披露（完整措辞）：数字由数据计算，避免文案与数据走失 -->
+    <p class="foot-disclosure" id="disclosureText" role="note"><span class="fd-tag">未完成学术核验</span>　本站 205 门课程中，经教师本人学术核验的为 <b>0</b> 门。目录只整理公开入口与编辑判断，<b>不代表教师本人或任职机构认可</b>；课程质量与讲次准确性请以原平台为准。</p>
+    <p>课程入口、开放范围和收费方式可能随平台调整。本站只提供外部链接与编辑整理，不托管课程内容；学习前请以原平台当前页面为准。课程横幅为本站程序化视觉，并非原课程封面。</p>
   </footer>
 
   </div><!-- /.wrap-main -->
@@ -1519,7 +1517,7 @@ function buildHeroExtras(){
   // 学术核验数字由数据推导：0 也照样写出来，不靠文案硬编码
   const verified = COURSES.filter(course => course.verified_at).length;
   const disclose = document.getElementById("disclosureText");
-  if(disclose) disclose.innerHTML = `本站 ${COURSES.length} 门课程中，经教师本人学术核验的为 <b>${verified}</b> 门。目录只整理公开入口与编辑判断，<b>不代表教师本人或任职机构认可</b>；课程质量与讲次准确性请以原平台为准。`;
+  if(disclose) disclose.innerHTML = `<span class="fd-tag">未完成学术核验</span>　本站 ${COURSES.length} 门课程中，经教师本人学术核验的为 <b>${verified}</b> 门。目录只整理公开入口与编辑判断，<b>不代表教师本人或任职机构认可</b>；课程质量与讲次准确性请以原平台为准。`;
   // 路径条数由数据推导，避免文案里的数字随数据增长而失真
   const pathNote = document.getElementById("pathCountNote");
   if(pathNote) pathNote.textContent = String(PATHS.length);
