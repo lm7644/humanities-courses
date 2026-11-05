@@ -1203,7 +1203,7 @@ window.HUMANITIES_COURSES = [
     "review": "神话不是故事，是文明的底层逻辑——听他讲。",
     "url": "https://mooc1.chaoxing.com/course/200242474.html",
     "status": "open",
-    "schedule": "来源已核 · 学习内容可能需要平台登录",
+    "schedule": "来源已核 · 学习内容需平台登录（2026-11-05 复核：匿名访问返回 403）",
     "id": "hc-025",
     "source_type": "platform_course_page",
     "source_title": "文学人类学概说",
@@ -1227,7 +1227,8 @@ window.HUMANITIES_COURSES = [
     "outcomes": [],
     "tags": [],
     "quality_evidence": [
-      "超星课程索引页显示课程名、主讲叶舒宪、中国社会科学院和31学时；学习内容可能要求平台登录。"
+      "超星课程索引页显示课程名、主讲叶舒宪、中国社会科学院和31学时；学习内容可能要求平台登录。",
+      "2026-11-05 复核：课程页对匿名访问返回 403，仅登录后可达，入口按「需登录」标注。"
     ],
     "perspective": [],
     "known_limits": [

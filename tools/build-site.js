@@ -9,7 +9,8 @@ const output = path.join(root, "dist");
 const files = [
   "index.html",
   "data/courses.js",
-  "data/paths.js"
+  "data/paths.js",
+  "assets/og-cover.png"
 ];
 
 execFileSync(process.execPath, [path.join(root, "tools", "build-data-script.js"), "--check"], { cwd:root, stdio:"inherit" });

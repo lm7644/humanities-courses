@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-04T18:57:17.271Z",
-  "siteRoot": "dist",
+  "generatedAt": "2026-11-05T16:36:44.662Z",
+  "siteRoot": ".",
   "legacyArrayMigration": {
     "type": "hm-favs",
     "version": 2,
@@ -147,7 +147,7 @@
     "focusReturned": "ctCompare",
     "blockedCompareLinkCount": 0,
     "blockedCompareShowsDisabled": true,
-    "sharedUrl": "http://127.0.0.1:7506/",
+    "sharedUrl": "http://127.0.0.1:7189/",
     "shareLeakedToken": false,
     "shareLeakedFragment": false,
     "oldClaimsPresent": false,
@@ -158,20 +158,20 @@
     "wrapInnerWidth": 1304,
     "mainWidth": 1304,
     "navPosition": "fixed",
-    "minCardWidth": 638,
-    "maxCollapsedCardHeight": 446,
-    "maxNormalCardHeight": 359,
+    "minCardWidth": 640,
+    "maxCollapsedCardHeight": 425,
+    "maxNormalCardHeight": 355,
     "blockedCardCount": 22,
     "tallNormalIds": [],
     "scrollNavHeight": 54,
     "courseViewportDiagnostic": {
       "scrollNavHeight": 54,
       "desiredCardTop": 56,
-      "absoluteCardTop": 2923.390625,
-      "requestedScrollY": 2867.390625,
-      "actualScrollY": 2867,
+      "absoluteCardTop": 2741.359375,
+      "requestedScrollY": 2685.359375,
+      "actualScrollY": 2685,
       "innerHeight": 900,
-      "scrollHeight": 47709
+      "scrollHeight": 44224
     },
     "fullyVisibleCourseCards": 4,
     "fullyVisibleNormalCards": 2,
@@ -179,38 +179,38 @@
       {
         "id": "hc-001",
         "top": 56,
-        "bottom": 415,
-        "height": 359
+        "bottom": 389,
+        "height": 333
       },
       {
         "id": "hc-004",
         "top": 56,
-        "bottom": 468,
-        "height": 412
+        "bottom": 442,
+        "height": 386
       },
       {
         "id": "hc-058",
-        "top": 486,
-        "bottom": 845,
-        "height": 359
+        "top": 458,
+        "bottom": 791,
+        "height": 333
       },
       {
         "id": "hc-003",
-        "top": 486,
-        "bottom": 898,
-        "height": 412
+        "top": 458,
+        "bottom": 844,
+        "height": 386
       },
       {
         "id": "hc-060",
-        "top": 916,
-        "bottom": 1275,
-        "height": 359
+        "top": 860,
+        "bottom": 1193,
+        "height": 333
       },
       {
         "id": "hc-008",
-        "top": 916,
-        "bottom": 1275,
-        "height": 359
+        "top": 860,
+        "bottom": 1193,
+        "height": 333
       }
     ],
     "scrollNavVisible": true,

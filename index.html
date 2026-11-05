@@ -10,22 +10,27 @@
 <!-- 站点正式地址：全站唯一基址来源。迁移域名时只改下面的 canonical，
      tools/build-site.js 会从中读取基址生成 sitemap.xml 与结构化数据，无需改第二处。
      部署方案与域名取舍见 docs/P1部署与域名方案.md。 -->
-<link rel="canonical" href="https://hanako-d1gka3sb1da03c66b-1327318533.tcloudbaseapp.com/humanities-courses/" />
+<link rel="canonical" href="https://lm7644.github.io/humanities-courses/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="人文学科公开课目录" />
 <meta property="og:title" content="人文学科公开课目录 · 选课与学习路径" />
 <meta property="og:description" content="跨平台人文学科公开课目录，支持课程检索、收藏、对比和四周学习路径。" />
-<meta property="og:url" content="https://hanako-d1gka3sb1da03c66b-1327318533.tcloudbaseapp.com/humanities-courses/" />
+<meta property="og:url" content="https://lm7644.github.io/humanities-courses/" />
+<meta property="og:image" content="https://lm7644.github.io/humanities-courses/assets/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="人文学科公开课目录：205 门课，17 个方向，可检索、可比较、可收藏" />
 <meta property="og:locale" content="zh_CN" />
-<meta name="twitter:card" content="summary" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://lm7644.github.io/humanities-courses/assets/og-cover.png" />
 <!-- favicon：纯矢量书本图形（P0-1：不使用 U+2605 等符号字形充当图标） -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23E0483D'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 8.5h5A2.5 2.5 0 0 1 16.5 11v13a2 2 0 0 0-2-2H9z'/%3E%3Cpath d='M23 8.5h-5A2.5 2.5 0 0 0 15.5 11v13a2 2 0 0 1 2-2h6z'/%3E%3C/g%3E%3C/svg%3E" />
 <style>
   /* ============================================================
      样式区（老师一般不用改这里）
      设计语言：暗色为主 · 编辑部 / 粗野现代（Editorial × Brutalist）
-     强对比 · 超大衬线标题 · 朱红主题色 · 程序化 SVG 封面 · 3D 悬浮
-     · 鼠标光晕 · 错位网格 · 滚动错落淡入 · 主题可切换 · 分类强调色贯穿
+     强对比 · 超大衬线标题 · 朱红主题色 · 程序化 SVG 封面
+     · 分类色轮（17 类共用一套 OKLCH 明度/彩度） · 主题可切换
      ============================================================ */
   :root{
     /* —— 默认：暗色（深墨 / 炭黑） —— */
@@ -42,7 +47,6 @@
     --accent-soft:rgba(224,72,61,.13);    /* 主题色淡底 */
     --accent-strong:#C23A30;              /* 实底按钮/印章加深：白字 ≥4.5:1 */
     --accent-deep:#FF8177;                /* 深底上的可读红（栏目字） */
-    --violet:#6b5bd6;                     /* 辅助冷色（仅 Hero 光晕） */
     --cover-fallback:linear-gradient(135deg,#E0483D 0%,#7a1f18 58%,#2a0f0c 100%);
     --chip:rgba(255,255,255,.05);
     --shadow:0 1px 2px rgba(0,0,0,.5),0 18px 40px rgba(0,0,0,.45);
@@ -69,7 +73,6 @@
     --accent-soft:rgba(200,52,42,.10);
     --accent-strong:#A82B23;
     --accent-deep:#A82B23;
-    --violet:#8b7ce6;
     --cover-fallback:linear-gradient(135deg,#E0483D 0%,#f0c6bf 100%);
     --chip:#ffffff;
     --shadow:0 1px 2px rgba(60,40,20,.06),0 16px 38px rgba(60,40,20,.10);
@@ -173,8 +176,8 @@
   }
   .sub{
     position:relative;z-index:3;
-    font-size:clamp(15px,1.6vw,18px);color:var(--ink-soft);margin:0;max-width:62ch;
-    line-height:1.7;animation:heroIn .9s .2s both;
+    font-size:clamp(15px,1.6vw,18px);color:var(--ink-soft);margin:0;max-width:34em;
+    line-height:1.7;animation:heroIn .9s .2s both;text-wrap:balance;
   }
   .hero-stats{
     position:relative;z-index:3;
@@ -193,20 +196,42 @@
   }
   body.cursor-on .cursor-glow{opacity:1;}
 
-  /* ============ 分类滚动 Ticker ============ */
-  .ticker{
-    position:relative;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  /* ============ 分类索引条（静态可点，替代原滚动 Ticker） ============ */
+  .cat-index{
+    position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
     background:var(--surface);z-index:3;
   }
-  .ticker-track{
-    display:inline-flex;align-items:center;gap:26px;white-space:nowrap;
-    padding:12px 0;will-change:transform;
-    animation:ticker 38s linear infinite;
-    font-size:13px;letter-spacing:.14em;color:var(--muted);font-weight:600;
+  .cat-index-track{
+    display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;
+    max-width:1360px;margin:0 auto;padding:8px 28px;
   }
-  .ticker-track span{padding:0 2px;}
-  .ticker-track .tk-dot{color:var(--accent);font-size:12px;letter-spacing:0;}
-  .ticker:hover .ticker-track{animation-play-state:paused;}
+  .ci-item{
+    display:inline-flex;align-items:center;gap:7px;
+    min-height:34px;padding:4px 9px;border:1px solid transparent;border-radius:2px;
+    background:none;color:var(--ink-soft);font:600 13px/1.2 var(--font-sans);
+    letter-spacing:0;cursor:pointer;white-space:nowrap;
+  }
+  .ci-item:hover{border-color:var(--line-strong);background:var(--surface-2);color:var(--ink);}
+  .ci-item:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;}
+  .ci-item .ci-dot{width:7px;height:7px;border-radius:50%;flex:none;}
+  .ci-item .ci-n{color:var(--muted);font:600 11px/1 var(--font-sans);letter-spacing:0;font-variant-numeric:tabular-nums;}
+  .ci-item[aria-current="true"]{border-color:var(--accent);color:var(--accent-deep);}
+  /* 分类索引里复用筛选 pill：去掉边框、加色点与计数，和工具条里的平台/难度区分开 */
+  .cat-index .pill{
+    display:inline-flex;align-items:center;gap:7px;
+    min-height:34px;padding:4px 9px;border-color:transparent;background:none;
+    color:var(--ink-soft);font:600 13px/1.2 var(--font-sans);
+  }
+  .cat-index .pill:hover{border-color:var(--line-strong);background:var(--surface-2);color:var(--ink);}
+  .cat-index .pill.active{border-color:var(--accent);color:var(--accent-deep);background:color-mix(in srgb,var(--accent) 12%,transparent);}
+  .cat-index .pill:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;}
+  .cat-index .ci-dot{width:7px;height:7px;border-radius:50%;flex:none;}
+  .cat-index .ci-n{color:var(--muted);font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;}
+  @media(max-width:720px){
+    .cat-index-track{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;padding:6px 16px;scrollbar-width:none;}
+    .cat-index-track::-webkit-scrollbar{display:none;}
+    .cat-index .pill{min-height:44px;padding:8px 12px;}
+  }
 
   .wrap{max-width:1360px;margin:0 auto;padding:20px 28px 72px;}
 
@@ -235,17 +260,20 @@
     margin-bottom:28px;
     position:static;
   }
-  .toolbar .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
-  .toolbar .row + .row{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+  .toolbar .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  /* [hidden] 在 display:flex 下会被覆盖，技法行曾因此常驻，白占一行 */
+  .toolbar .row[hidden]{display:none;}
+  .toolbar .row + .row{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
   .toolbar .label{
-    font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
-    color:var(--muted);min-width:48px;
+    font-size:12px;letter-spacing:.12em;font-weight:700;
+    color:var(--muted);min-width:44px;
   }
+  .toolbar .label-mid{margin-left:20px;padding-left:20px;border-left:1px solid var(--line);}
   .pill{
     border:1px solid var(--line-strong);
     background:transparent;
     color:var(--ink-soft);
-    padding:8px 14px;
+    padding:6px 11px;
     border-radius:2px;
     font-size:13px;font-weight:600;cursor:pointer;
     transition:.16s;white-space:nowrap;font-family:var(--font-sans);
@@ -269,35 +297,36 @@
   .count b{color:var(--accent);font-family:var(--font-serif);font-size:14px;}
 
   /* ============ 分类区块 ============ */
-  .cat{margin-bottom:64px;}
+  .cat{margin-bottom:56px;}
   .cat-head{
-    display:grid;grid-template-columns:auto 1fr;align-items:end;gap:20px;
-    padding-bottom:14px;margin-bottom:26px;
+    display:grid;grid-template-columns:auto 1fr;align-items:end;gap:16px;
+    padding-bottom:12px;margin-bottom:24px;
     border-bottom:2px solid var(--line);
     position:relative;
   }
   .cat-head::after{
     content:"";position:absolute;left:0;bottom:-2px;height:2px;width:90px;background:var(--cat-color,var(--accent));
   }
+  /* 序号降到与标题同一量级：章节名才是扫读锚点，序号只是定位器 */
   .cat-head .num{
     font-family:var(--font-serif);font-weight:800;
-    font-size:clamp(54px,9vw,116px);line-height:.78;
+    font-size:clamp(40px,5vw,64px);line-height:.9;
     color:transparent;
-    -webkit-text-stroke:2px var(--cat-color,var(--accent));
-    text-stroke:2px var(--cat-color,var(--accent));
+    -webkit-text-stroke:1.5px var(--cat-color,var(--accent));
+    text-stroke:1.5px var(--cat-color,var(--accent));
     letter-spacing:-.03em;
     text-shadow:none;
   }
-  .cat-head-main{display:flex;flex-direction:column;gap:6px;padding-bottom:8px;}
+  .cat-head-main{display:flex;flex-direction:column;gap:4px;padding-bottom:2px;}
   .cat-head h2{
-    font-size:clamp(26px,4vw,42px);margin:0;color:var(--ink);letter-spacing:-.01em;
+    font-size:clamp(24px,3.2vw,36px);margin:0;color:var(--ink);letter-spacing:-.01em;
   }
   .cat-head .cat-sub{
-    font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;
+    font-size:12.5px;letter-spacing:.04em;color:var(--muted);font-weight:600;
   }
 
   /* ============ 两列书目网格：稳定保证一屏两列×两排 ============ */
-  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;align-items:start;}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 24px;align-items:start;}
   @media (max-width:720px){.grid{grid-template-columns:1fr;}}
 
   /* 卡片外层：负责滚动淡入 + 布局 */
@@ -332,7 +361,7 @@
   .card:hover .card-inner::before{transform:scaleX(1);}
 
   /* 封面：程序化内联 SVG */
-  .cover{position:relative;height:132px;overflow:hidden;background:var(--cover-fallback);}
+  .cover{position:relative;height:112px;overflow:hidden;background:var(--cover-fallback);}
   .cover-svg > text:nth-of-type(n+3){display:none;}
   .course-banner{position:absolute;inset:0;z-index:6;padding:12px 22px 14px 27px;display:grid;grid-template-rows:auto auto minmax(30px,auto);align-content:end;gap:4px;color:#fff;background:linear-gradient(90deg,rgba(7,7,8,.94) 0%,rgba(7,7,8,.82) 54%,rgba(7,7,8,.34) 82%,rgba(7,7,8,.12) 100%);}
   .course-banner::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cat-color,var(--accent));box-shadow:3px 0 16px color-mix(in srgb,var(--cat-color,var(--accent)) 35%,transparent);}
@@ -340,7 +369,8 @@
   .banner-teacher{display:flex;align-items:center;gap:8px;min-width:0;color:#fff7e8;}
   .teacher-label{flex:none;padding:4px 6px;background:color-mix(in srgb,var(--cat-color,var(--accent)) 62%,#000);font:800 12px/1 var(--font-sans);letter-spacing:.14em;color:#fff;}
   .banner-teacher strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:800 17px/1.15 var(--font-sans);letter-spacing:.045em;}
-  .teacher-link{all:unset;cursor:pointer;font:inherit;color:inherit;letter-spacing:inherit;}
+  .teacher-link{all:unset;cursor:pointer;font:inherit;color:inherit;letter-spacing:inherit;display:inline-flex;align-items:center;min-height:24px;padding:2px 0;}
+  .teacher-link:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;}
   .teacher-link:hover,.teacher-link:focus-visible{text-decoration:underline;text-underline-offset:3px;}
   .banner-name{font-family:var(--font-serif);font-size:28px;font-weight:900;line-height:1.08;letter-spacing:0;margin:0;max-width:86%;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-shadow:0 3px 12px rgba(0,0,0,.64);}
   .cover-svg{
@@ -348,16 +378,16 @@
     transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s;
   }
   .card:hover .cover-svg{transform:scale(1.07);}
-  .card-body{padding:12px 18px 14px;display:flex;flex-direction:column;flex:1;}
-  .badges{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 8px;}
+  .card-body{padding:10px 18px 12px;display:flex;flex-direction:column;flex:1;}
+  .badges{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 6px;}
   .badge{font-size:12px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:2px;border:1px solid transparent;}
   .badge.platform{background:var(--chip);color:var(--ink-soft);border-color:var(--line-strong);}
   /* 难度徽标——更醒目（渐变底 + 图标 + 投影） */
   .badge.diff{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;letter-spacing:.03em;padding:4px 12px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.14);}
   .badge.diff .diff-ico{font-size:9px;line-height:1;transform:translateY(.5px);}
-  .badge.diff-入门{color:#0b7a3b;background:linear-gradient(180deg,#e6f9ee,#c9f2da);border:1px solid #7fdda3;}
+  .badge.diff-入门{color:#0b7a3b;background:linear-gradient(180deg,#e6f9ee,#d4f5e1);border:1px solid #7fdda3;}
   .badge.diff-进阶{color:#1b4fc4;background:linear-gradient(180deg,#e6eeff,#c6d8ff);border:1px solid #8fb0f0;}
-  .badge.diff-高阶{color:#9a5b00;background:linear-gradient(180deg,#fff1d6,#ffe0a3);border:1px solid #f0c06a;}
+  .badge.diff-高阶{color:#9a5b00;background:linear-gradient(180deg,#fff1d6,#ffedc6);border:1px solid #f0c06a;}
   /* 资料状态徽标 */
   .badge.st-always{color:#4f5d6b;background:#edf1f5;border:1px solid #b9c4ce;}
   .badge.st-open{color:#0b7a3b;background:#d8f6e3;border:1px solid #4fcf8a;box-shadow:0 0 0 2px rgba(79,207,138,.20);}
@@ -368,8 +398,8 @@
   /* 课程安排与核验说明 */
   .meta.sched{color:var(--accent-2);font-weight:600;margin-top:2px;font-size:12px;}
   /* 不可用或待核链接：按钮置灰禁用 */
-  .go.disabled{background:#c4c8ce;color:#fff;cursor:not-allowed;box-shadow:none;}
-  .go.disabled:hover{transform:none;box-shadow:none;background:#c4c8ce;}
+  .go.disabled{background:transparent;color:var(--muted);border:1px dashed var(--line-strong);cursor:not-allowed;box-shadow:none;}
+  .go.disabled:hover{transform:none;box-shadow:none;background:transparent;color:var(--muted);}
   .meta{font-size:12px;color:var(--muted);margin:0 0 2px;line-height:1.35;letter-spacing:.01em;}
   .meta.teacher{color:var(--ink);font-size:12px;margin:0 0 4px;line-height:1.4;}
   .meta.teacher b{color:color-mix(in srgb,var(--cat-color,var(--accent)) 45%,var(--ink));font-weight:800;}
@@ -391,11 +421,13 @@
     font-size:14px;color:var(--ink);line-height:1.55;
     background:var(--surface-2);border-left:3px solid var(--accent);
     padding:8px 12px;border-radius:0 2px 2px 0;margin:8px 0 10px;
-    position:relative;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+    position:relative;
   }
-  .card.is-expanded .review{display:block;overflow:visible;}
+  /* 截断放在内层文本上：padding 留在外层，避免窄屏出现半行残字 */
+  .review .rv-body{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
+  .card.is-expanded .rv-body{display:block;overflow:visible;}
 .review .q{
-    display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    display:block;font-size:12px;letter-spacing:.1em;
     color:var(--accent-deep);font-weight:800;margin-bottom:4px;
   }
   /* 卡片详情面板：系列条目 / 技法 / 载体 / 其他入口（展开后过渡显现） */
@@ -454,8 +486,8 @@
     top:-18%;left:-12%;animation:auroraA 24s ease-in-out infinite alternate;
   }
   .aurora::after{
-    background:radial-gradient(circle at 70% 70%,var(--violet),transparent 60%);
-    bottom:-22%;right:-14%;animation:auroraB 30s ease-in-out infinite alternate;
+    background:radial-gradient(circle at 70% 70%,var(--accent),transparent 62%);
+    bottom:-22%;right:-14%;opacity:.16;animation:none;
   }
   [data-theme="light"] .aurora::before,[data-theme="light"] .aurora::after{opacity:.16;}
   @keyframes auroraA{from{transform:translate3d(0,0,0) scale(1);}to{transform:translate3d(8%,6%,0) scale(1.15);}}
@@ -480,24 +512,16 @@
     opacity:.45;
   }
 
-  /* Hero 主标题渐变流光 + 柔光 */
+  /* Hero 主标题：单色朱红强调（去掉彩虹流光，回到编辑部制版的双色纪律） */
   .hero-title{text-shadow:none;}
   .hero-title .accent{
-    background:linear-gradient(100deg,var(--accent) 0%,#ff8a5b 22%,#ffd34e 48%,#ff8a5b 74%,var(--accent-2) 100%);
-    background-size:240% 100%;
-    -webkit-background-clip:text;background-clip:text;
-    -webkit-text-fill-color:transparent;color:transparent;
-    animation:flow 6.5s linear infinite;
+    background:none;-webkit-text-fill-color:var(--accent);color:var(--accent);
+    animation:none;
   }
-  @keyframes flow{from{background-position:0% 0;}to{background-position:240% 0;}}
-  .hero-title .accent::after{
-    background:linear-gradient(90deg,var(--accent),#ffd34e,var(--accent-2));
-    animation:flow 6.5s linear infinite;
-  }
+  .hero-title .accent::after{background:var(--accent);animation:none;}
 
-  /* Hero 巨型水印呼吸 */
-  .hero-wm{animation:wmPulse 7s ease-in-out infinite;}
-  @keyframes wmPulse{0%,100%{opacity:.05;transform:scale(1);}50%{opacity:.11;transform:scale(1.05);}}
+  /* Hero 巨型水印：静态压印，不呼吸（背景不动，眼睛才能停在标题上） */
+  .hero-wm{animation:none;opacity:.07;}
 
   /* 卡片：磨砂玻璃底 + 旋转渐变描边 */
   .card-inner{
@@ -505,58 +529,30 @@
       color-mix(in srgb, var(--surface) 96%, #ffffff 5%),
       color-mix(in srgb, var(--surface) 90%, #000000 10%));
   }
-  .card::before{
-    content:"";position:absolute;inset:0;border-radius:5px;padding:1.5px;z-index:2;
-    background:conic-gradient(from var(--ang),
-      transparent 0deg, var(--cat-color,var(--accent)) 90deg,
-      transparent 200deg, var(--cat-color,var(--accent)) 300deg, transparent 360deg);
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;
-    opacity:0;transition:opacity .5s ease;pointer-events:none;
-  }
-  .card:hover::before{opacity:1;animation:spin 5s linear infinite;transform:translateY(-12px);}
-  @property --ang{syntax:'<angle>';inherits:false;initial-value:0deg;}
-  @keyframes spin{to{--ang:360deg;}}
-
-  /* 卡片 hover 流光扫过 */
-  .card-inner::after{
-    content:"";position:absolute;top:-60%;left:-30%;width:55%;height:220%;
-    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.18) 50%,transparent 100%);
-    transform:translateX(-160%) rotate(8deg);pointer-events:none;z-index:8;opacity:0;
-  }
-  .card:hover .card-inner::after{opacity:1;animation:sheen .95s cubic-bezier(.2,.7,.2,1) forwards;}
-  @keyframes sheen{to{transform:translateX(360%) rotate(8deg);}}
-  /* 指针跟随柔光（GPU 友好，无混色） */
+  /* 悬停只保留一件事：分类色的 3px 顶边展开（替代旋转锥形描边 + 流光扫过 + 指针柔光） */
+  .card::before{content:none;}
+  .card-inner::after{content:none;}
   .card-inner::before{
-    content:"";position:absolute;inset:0;border-radius:5px;z-index:7;pointer-events:none;
-    background:radial-gradient(240px circle at var(--cx,50%) var(--cy,50%),
-      rgba(255,255,255,.12),transparent 46%);
-    opacity:0;transition:opacity .35s ease;
+    content:"";position:absolute;top:0;left:0;height:3px;width:100%;z-index:6;pointer-events:none;
+    background:var(--cat-color,var(--accent));
+    transform:scaleX(0);transform-origin:left;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1);
   }
-  .card:hover .card-inner::before{opacity:1;}
+  .card:hover .card-inner::before,
+  .card:focus-within .card-inner::before{transform:scaleX(1);}
 
-  /* 卡片 hover：分类色描边 + 彩色光晕 */
+  /* 卡片 hover：只上浮 6px + 分类色描边，不做缩放、不叠加彩色光晕 */
   .card:hover .card-inner{
-    --ly:-12px;
-    --tz:1.03;
+    --ly:-6px;
+    --tz:1;
     border-color:var(--cat-color,var(--accent));
-    box-shadow:var(--shadow-hover),0 0 0 1px var(--cat-color,var(--accent)),
-               0 24px 64px rgba(224,72,61,.22);
+    box-shadow:var(--shadow-hover),0 0 0 1px var(--cat-color,var(--accent));
   }
 
-  /* 封面：缓慢游走的高光，让程序化封面"活"起来 */
-  .cover::after{
-    content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-    background:radial-gradient(42% 60% at 28% 18%,rgba(255,255,255,.14),transparent 60%);
-    opacity:0;transition:opacity .4s;
-  }
-  .card:hover .cover::after{opacity:1;animation:hoverGlow 3.6s ease-in-out infinite;}
-  @keyframes hoverGlow{0%,100%{transform:translate(0,0);}50%{transform:translate(9%,7%);}}
+  /* 封面：悬停只轻微推近，不游走高光 */
+  .cover::after{content:none;}
 
-  /* 难度徽标：hover 霓虹辉光 */
-  .card:hover .badge.diff-入门{box-shadow:0 0 14px rgba(134,192,106,.55);}
-  .card:hover .badge.diff-进阶{box-shadow:0 0 14px rgba(111,176,214,.55);}
-  .card:hover .badge.diff-高阶{box-shadow:0 0 14px rgba(224,178,84,.6);}
+  /* 难度徽标不加霓虹辉光：颜色本身已经承担语义 */
 
   /* 分类标题：彩色下划线 */
   .cat-head h2{position:relative;display:inline-block;}
@@ -565,18 +561,13 @@
     background:linear-gradient(90deg,var(--cat-color,var(--accent)),transparent);
   }
 
-  /* 前往按钮渐变 + 扫光 */
-  .go{background:linear-gradient(100deg,var(--accent),var(--accent-2));position:relative;overflow:hidden;}
-  a.go::after{
-    content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;
-    background:linear-gradient(105deg,transparent,rgba(255,255,255,.4),transparent);
-    transform:skewX(-18deg);transition:left .55s ease;
-  }
-  a.go:hover::after{left:140%;}
+  /* 前往按钮：改描边式，悬停才填色 —— 205 张卡片的实心红块会盖过课程名 */
+  .go{background:transparent;color:var(--accent-deep);border:1px solid color-mix(in srgb,var(--accent) 62%,transparent);position:relative;}
+  .go:hover{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff;}
+  a.go::after{content:none;}
 
-  /* 分类序号徽标呼吸 */
-  .cat-head .num{transition:transform .4s,color .4s;}
-  .card:hover .cat-head .num{transform:scale(1.06);}
+  /* 分类序号徽标：静态 */
+  .cat-head .num{transition:none;}
 
   /* ============ 动画 ============ */
   @keyframes heroIn{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
@@ -584,8 +575,6 @@
     from{transform:translate3d(-3%,-2%,0) scale(1);}
     to{transform:translate3d(4%,3%,0) scale(1.12);}
   }
-  @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
   /* 入场淡入：纯 CSS 一次性动画，不依赖 IntersectionObserver
      （IO 在 column-count 多列容器内对子元素相交计算不可靠，会卡在隐藏态；
        改一次性动画，所有卡片加载即淡入，绝不会卡隐形） */
@@ -599,7 +588,7 @@
     .hero-inner{padding:0 18px 26px;}
     .hero-title br{display:block;}
     .hero-title{font-size:40px;line-height:1.02;letter-spacing:-.03em;}
-    .hero-stats{margin-top:12px;}
+    .hero-stats{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;}
     .hero-top{flex-wrap:wrap;gap:12px;}
     .theme-toggle{order:-1;}
     .toolbar{position:static;}
@@ -616,17 +605,13 @@
   [data-anim="off"] .hero-title .accent,
   [data-anim="off"] .hero-title .accent::after{animation:none;}
   [data-anim="off"] .hero-wm{animation:none;}
-  [data-anim="off"] .ticker-track{animation:none;}
-  [data-anim="off"] .card:hover::before{animation:none;}
-  [data-anim="off"] .card:hover .card-inner::after{animation:none;opacity:0;}
-  [data-anim="off"] .card:hover .card-inner::before{opacity:0;}
   [data-anim="off"] .cursor-glow{display:none;}
   [data-anim="off"] .card-detail{transition:none !important;}
   [data-anim="off"] .alt-badge,[data-anim="off"] .study-badge{animation:none !important;}
 
   @media (prefers-reduced-motion:reduce){
     .card{animation:none !important;opacity:1 !important;transform:none !important;}
-    .hero::after,.ticker-track{animation:none !important;}
+    .hero::after,.cat-index-track{animation:none !important;}
     .card-detail{transition:none !important;}
     .alt-badge,.study-badge{animation:none !important;}
     *{scroll-behavior:auto;}
@@ -791,7 +776,7 @@
 
   /* 打印样式：干净书目 / 讲义 */
   @media print{
-    .aurora,.grain,.cursor-glow,.ticker,.toolbar,.card-actions,
+    .aurora,.grain,.cursor-glow,.cat-index,.toolbar,.card-actions,
     .compare-tray,#compareModal,.hero::after,.hero::before{ display:none !important; }
     html,body{ background:#fff !important; color:#000 !important; }
     .wrap{ max-width:none; }
@@ -812,21 +797,28 @@
     width:42px;max-height:calc(100vh - 92px);overflow:visible;flex-direction:column;
     padding:8px;background:color-mix(in srgb,var(--surface) 94%,transparent);
     border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(10px);
-    opacity:0;transform:translateX(-120%);pointer-events:none;transition:.22s;
+    opacity:0;transform:translateX(-120%);pointer-events:none;
+    transition:opacity .22s,transform .22s,width .18s;
     scrollbar-width:thin;
   }
+  /* 42px 圆点条只是"扫读刻度"；鼠标移上去展开成带类名的清单，补足无标签的问题 */
+  .cat-nav:hover,.cat-nav:focus-within{width:auto;min-width:168px;}
   body.scrolled-nav .cat-nav{opacity:1;transform:none;pointer-events:auto;}
   .cat-nav-item{
-    display:flex;align-items:center;justify-content:center;width:100%;height:32px;flex:none;
-    padding:0;font-size:0;color:var(--ink-soft);text-decoration:none;
+    display:flex;align-items:center;justify-content:flex-start;gap:8px;width:100%;height:32px;flex:none;
+    padding:0 6px;font-size:0;color:var(--ink-soft);text-decoration:none;
     border:1px solid transparent;transition:.16s;position:relative;
   }
+  .cat-nav-item .nav-name{display:none;font:700 12px/1 var(--font-sans);white-space:nowrap;letter-spacing:.02em;}
+  .cat-nav:hover .nav-name,.cat-nav:focus-within .nav-name{display:inline;}
+  .cat-nav:hover .cat-nav-item,.cat-nav:focus-within .cat-nav-item{justify-content:flex-start;}
   .cat-nav-item::after{
     content:attr(data-cat);position:absolute;left:42px;top:50%;transform:translateY(-50%) translateX(-4px);
     padding:6px 8px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
     color:var(--ink);font:700 12px var(--font-sans);white-space:nowrap;opacity:0;pointer-events:none;transition:.16s;
   }
   .cat-nav-item:hover::after,.cat-nav-item:focus-visible::after{opacity:1;transform:translateY(-50%);}
+  .cat-nav:hover .cat-nav-item::after,.cat-nav:focus-within .cat-nav-item::after{content:none;}
   .cat-nav-item:hover{color:var(--accent);border-color:var(--line);}
   .cat-nav-item.active{
     color:var(--accent); border-color:var(--accent); font-weight:700;
@@ -835,7 +827,8 @@
   .cat-nav-item .nav-dot{width:9px;height:9px;border-radius:50%;flex:none;}
   .cat-nav-item.nav-missing{ display:none; }
   .cat-nav.is-hidden{ display:none; }
-  .cat{ scroll-margin-top:20px; }
+  .cat{ scroll-margin-top:74px; }
+  #content{ scroll-margin-top:64px; }
 
   @media (max-width:1180px){.cat-nav{display:none;}}
 
@@ -859,12 +852,19 @@
   .paths-head p{margin:0;max-width:560px;color:var(--muted);font-size:13px;line-height:1.6;}
   .path-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
   .path-item{border:1px solid var(--line);border-top:4px solid var(--accent);background:var(--surface);box-shadow:var(--shadow);}
+  /* 第 6 格说明卡：填平 3×2 栅格的空档，顺便说清"草案"到底意味着什么 */
+  .path-note{border:1px dashed var(--line-strong);background:var(--surface-2);padding:16px;display:flex;flex-direction:column;gap:10px;min-height:142px;}
+  .path-note h3{margin:0;font-family:var(--font-serif);font-size:17px;line-height:1.3;color:var(--ink);}
+  .path-note ul{margin:0;padding-left:16px;color:var(--ink-soft);font-size:12.5px;line-height:1.7;}
+  .path-note li+li{margin-top:6px;}
+  .path-note .pn-tag{align-self:flex-start;padding:2px 8px;border:1px solid var(--gold-bd);background:var(--gold-bg);color:var(--gold);font:700 11px/1.6 var(--font-sans);letter-spacing:.04em;}
   .path-item summary{list-style:none;cursor:pointer;padding:16px 16px;min-height:142px;display:flex;flex-direction:column;gap:9px;}
   .path-item summary::-webkit-details-marker{display:none;}
   .path-kicker{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.04em;}
-  .path-status{color:#8a5800;background:#fff0c7;border:1px solid #dfb24b;padding:2px 6px;border-radius:999px;letter-spacing:0;}
+  .path-status{color:var(--gold);background:var(--gold-bg);border:1px solid var(--gold-bd);padding:2px 6px;border-radius:999px;letter-spacing:0;}
   .path-item.path-current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow);}
   .path-progress{display:flex;align-items:center;gap:8px;color:var(--muted);font:700 12px var(--font-sans);}
+  .path-progress-empty{color:var(--muted);font-weight:600;letter-spacing:.02em;}
   .path-progress-bar{height:4px;flex:1;background:var(--line);overflow:hidden;}
   .path-progress-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s ease;}
   .path-item h3{margin:0;font-family:var(--font-serif);font-size:18px;line-height:1.18;}
@@ -878,7 +878,9 @@
   .path-node:first-of-type{border-top:0;}
   .path-node.is-done{opacity:.62;}
   .path-node-head{display:flex;align-items:start;gap:9px;}
-  .path-node-check{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--accent);}
+  /* 复选框视觉 24px，但用 label 包出 44px 可点区域（触控目标下限），左右负边距保持文字对齐不变 */
+  .pn-check{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:44px;min-height:44px;margin:0 -10px;}
+  .path-node-check{width:24px;height:24px;flex:none;margin-top:0;accent-color:var(--accent);}
   .path-node b{display:block;font-size:13px;margin-bottom:4px;}
   .path-node p{margin:0;color:var(--muted);font-size:12px;line-height:1.55;}
   .path-node-actions{display:flex;align-items:center;gap:8px;margin:8px 0 0 29px;}
@@ -920,14 +922,14 @@
     --ink:#fff !important; --ink-soft:#fff !important; --muted:#e8e8e8 !important;
     --line:#fff !important; --line-strong:#fff !important;
     --accent:#ffe000 !important; --accent-2:#ffe000 !important;
-    --accent-soft:rgba(255,224,0,.22) !important; --violet:#ffe000 !important;
+    --accent-soft:rgba(255,224,0,.22) !important;
   }
   [data-contrast="high"][data-theme="light"]{
     --bg:#fff !important; --surface:#fff !important; --surface-2:#fff !important;
     --ink:#000 !important; --ink-soft:#000 !important; --muted:#1a1a1a !important;
     --line:#000 !important; --line-strong:#000 !important;
     --accent:#0033cc !important; --accent-2:#0033cc !important;
-    --accent-soft:rgba(0,51,204,.16) !important; --violet:#0033cc !important;
+    --accent-soft:rgba(0,51,204,.16) !important;
   }
   /* 去掉装饰性光晕 / 网格纸 / 颗粒（blend 保持 normal，仅隐藏） */
   [data-contrast="high"] .aurora,
@@ -967,7 +969,7 @@
   [data-contrast="high"] .cat-head::after,
   [data-contrast="high"] .cat-head h2::after{ background:var(--ink) !important; }
   [data-contrast="high"] .intro{ background:var(--surface-2); border-left-color:var(--accent); }
-  [data-contrast="high"] .ticker{ background:var(--surface); }
+  [data-contrast="high"] .cat-index{ background:var(--surface); }
   [data-contrast="high"] .toolbar,
   [data-contrast="high"] .notice,
   [data-contrast="high"] .modal-box,
@@ -999,17 +1001,37 @@
   /* B2 徽标入场：轻淡入 220ms，随卡片错峰节奏 */
   @keyframes badgeIn{from{opacity:0;transform:translateY(-3px);}to{opacity:1;transform:none;}}
   .alt-badge,.study-badge{animation:badgeIn .22s ease both;}
-  .alt-jump{border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);font:700 12px var(--font-sans);padding:2px 8px;cursor:pointer;}
+  .alt-jump{border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);font:700 12px var(--font-sans);padding:2px 8px;display:inline-flex;align-items:center;cursor:pointer;}
   .alt-jump:hover{border-color:var(--accent);color:var(--accent);}
   .hero-actions{position:relative;z-index:3;display:flex;gap:10px;margin-top:16px;}
   .hero-action{display:inline-flex;align-items:center;min-height:40px;padding:8px 14px;border:1px solid var(--line-strong);color:var(--ink);font-size:13px;font-weight:800;background:var(--surface);}
   .hero-action.primary{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff;}
   .hero-action:hover{border-color:var(--accent);color:var(--accent);}
   .hero-action.primary:hover{color:#fff;background:var(--accent-strong);filter:brightness(1.06);}
+  /* Hero 内嵌检索：找课从首屏开始，不用先滚过路线与筛选条 */
+  .hero-search{display:flex;flex:1;min-width:0;max-width:520px;}
+  .hero-search input{
+    flex:1;min-width:0;height:40px;padding:0 14px;
+    border:1px solid var(--line-strong);border-right:0;border-radius:2px 0 0 2px;
+    background:var(--surface);color:var(--ink);font:600 13px/1 var(--font-sans);
+  }
+  .hero-search input::placeholder{color:var(--muted);font-weight:500;}
+  .hero-search input:focus{outline:none;border-color:var(--accent);}
+  .hero-search input:focus-visible{outline:2px solid var(--accent-2);outline-offset:1px;}
+  .hero-search .hero-action{border-radius:0 2px 2px 0;white-space:nowrap;}
+
+  /* 学术核验声明条：常驻页首，不随筛选消失 */
+  .disclosure{position:relative;z-index:3;background:var(--gold-bg);border-bottom:1px solid var(--gold-bd);}
+  .dc-inner{display:flex;align-items:flex-start;gap:12px;max-width:1360px;margin:0 auto;padding:11px 28px;}
+  .dc-tag{flex:none;padding:2px 8px;border:1px solid var(--gold-bd);border-radius:2px;color:var(--gold);font:700 11px/1.6 var(--font-sans);letter-spacing:.06em;white-space:nowrap;}
+  .dc-text{color:var(--ink-soft);font-size:13px;line-height:1.6;}
+  .dc-text b{color:var(--ink);}
   #courseExplorer{scroll-margin-top:64px;}
   @media(max-width:860px){.nav-filter-btn.nav-major{display:block;}.scroll-nav .mini-search{min-width:92px;}.scroll-top{min-width:48px;}}
   @media(max-width:560px){
-    .hero-actions{display:grid;grid-template-columns:1fr 1fr;}.hero-action{justify-content:center;}
+    .hero-actions{display:grid;grid-template-columns:1fr;}.hero-action{justify-content:center;}
+    .hero-search{max-width:none;}
+    .dc-inner{flex-direction:column;gap:6px;padding:10px 16px;}
     .hero-title .title-path{display:block;}
     .paths-block{padding-top:12px;overflow:hidden;}.path-grid{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:86%;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;padding-bottom:8px;scrollbar-width:thin;}.path-item{scroll-snap-align:start;}.path-item summary{min-height:0;}
     .notice{padding:12px 14px;}
@@ -1020,6 +1042,29 @@
 .ic-x{display:inline-block;margin-left:4px;opacity:.55;}
 .dotmark{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.6;margin-right:2px;vertical-align:1px;}
 #themeToggle,#animToggle,#shareBtn,#favToggle,#miniFav{display:inline-flex;align-items:center;gap:5px;}
+
+/* 375px 窄屏可读性与可点性：
+   1) 正文不小于 16px（卡片观点、展开说明、路线说明、声明条）；meta 为次要信息，13px
+   2) 所有可点控件的触控目标不小于 44×44（WCAG 2.5.5 / iOS HIG） */
+@media (max-width:560px){
+  .review{font-size:16px;line-height:1.65;}
+  .intro{font-size:16px;line-height:1.7;}
+  .dc-text{font-size:16px;line-height:1.6;}
+  .path-note li,.path-note p,.blocked-note{font-size:16px;line-height:1.7;}
+  .meta,.meta.teacher,.meta.verify,.meta.sched{font-size:13px;line-height:1.5;}
+  .hero-action{min-height:44px;}
+  .hero-search input{height:44px;}
+  #searchInput{min-height:44px;}
+  .go{min-height:44px;padding:11px 14px;}
+  .detail-btn{min-height:44px;}
+  .teacher-link{min-height:44px;min-width:44px;}
+  .path-node-btn{min-height:44px;}
+  .select,#sortSelect{min-height:44px;}
+  /* 窄屏下课程引用按钮曾被 flex 压成 1 个字宽（30×150），改为不收缩、不换行 */
+  .path-course-ref{flex:none;white-space:nowrap;min-height:44px;min-width:44px;}
+  .theme-toggle{min-height:44px;display:inline-flex;align-items:center;}
+  .scroll-nav .mini-search{height:44px;}
+}
 </style>
 </head>
 <body>
@@ -1030,9 +1075,6 @@
   <div class="aurora" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="gridpaper" aria-hidden="true"></div>
-
-  <!-- 鼠标跟随光晕（全局，零成本） -->
-  <div class="cursor-glow" aria-hidden="true"></div>
 
   <!-- 顶部 Hero 页眉 -->
   <header class="hero">
@@ -1045,9 +1087,15 @@
         <button id="contrastToggle" class="theme-toggle" type="button" aria-label="切换高对比模式" aria-pressed="false"><span data-ic="contrast"></span>高对比</button>
       </div>
       <h1 class="hero-title">人文学科<br>公开课<span class="accent">选课</span><span class="title-path">与学习路径</span></h1>
-      <p class="sub">把分散在不同平台的人文课程整理成可检索、可收藏、可比较的目录，并提供<b id="heroPathCount">全部</b>条四周学习路线。</p>
+      <p class="sub">把分散在不同平台的人文课程整理成可检索、可收藏、可比较的目录，并提供 <b id="heroPathCount">5</b> 条四周学习路线。</p>
       <div class="hero-stats" id="heroStats"></div>
-      <div class="hero-actions"><a class="hero-action primary" href="#courseExplorer">浏览课程</a><a class="hero-action" href="#pathsTitle">选择学习路线</a></div>
+      <div class="hero-actions">
+        <div class="hero-search">
+          <input id="heroSearch" type="search" maxlength="100" aria-label="搜索课程" placeholder="找课程、教师、分类或平台…" autocomplete="off">
+          <button id="heroSearchBtn" class="hero-action primary" type="button">找课</button>
+        </div>
+        <a class="hero-action" href="#pathsTitle">选择学习路线</a>
+      </div>
     </div>
   </header>
 
@@ -1067,9 +1115,17 @@
     <button class="scroll-top" id="scrollTop" type="button">↑ 顶部</button>
   </nav>
 
-  <!-- 分类滚动 Ticker -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track" id="tickerTrack"></div>
+  <!-- 分类索引 / 分类筛选：同一组控件，点一下就把列表收窄到该类 -->
+  <nav class="cat-index" aria-label="分类索引">
+    <div class="cat-index-track" id="categoryFilters" role="group" aria-label="按分类筛选"></div>
+  </nav>
+
+  <!-- 学术核验状态声明：数字由数据计算，避免文案与数据走失 -->
+  <div class="disclosure" role="note">
+    <div class="dc-inner">
+      <span class="dc-tag">未完成学术核验</span>
+      <span class="dc-text" id="disclosureText">本站 205 门课程中，经教师本人学术核验的为 0 门。目录只整理公开入口与编辑判断，<b>不代表教师本人或任职机构认可</b>；课程质量与讲次准确性请以原平台为准。</span>
+    </div>
   </div>
 
   <div class="wrap">
@@ -1104,39 +1160,29 @@
     「入门 → 进阶 → 高阶」是编辑设置的<b>难度 / 阶段标签</b>；<b id="pathCountNote">全部</b>条学习路径仍是待教师复核草案。「编辑摘要」与「编辑观点」均为本站判断，不代表平台或任职机构背书。课程信息以原平台为准。
   </div>
 
-  <!-- 筛选工具条 -->
+  <!-- 筛选工具条：检索在最前（找课才是主任务），筛选维度在后 -->
   <div class="toolbar" id="courseExplorer">
-    <div class="row">
-      <span class="label">平台</span>
-      <div id="platformFilters" class="row" style="gap:8px;"></div>
-    </div>
-    <div class="row">
-      <span class="label">难度</span>
-      <div id="difficultyFilters" class="row" style="gap:8px;"></div>
-    </div>
-    <div class="row">
-      <span class="label">访问</span>
-      <div id="accessFilters" class="row" style="gap:8px;"></div>
-    </div>
-    <div class="row">
-      <span class="label">分类</span>
-      <div id="categoryFilters" class="row" style="gap:8px;"></div>
-    </div>
-    <div class="row" id="techniqueRow" hidden>
-      <span class="label">技法</span>
-      <div id="techniqueFilters" class="row" style="gap:8px;"></div>
-    </div>
     <div class="row">
       <label class="label" for="searchInput">检索</label>
       <input id="searchInput" class="search" type="text" maxlength="100" placeholder="输入课程名 / 讲师 / 分类 / 平台……" />
       <span id="countLabel" class="count" aria-live="polite" aria-atomic="true"></span>
       <button id="favToggle" class="pill" type="button" aria-pressed="false"><span data-ic="star"></span>我的收藏</button>
-      <button id="resetFilters" class="pill ghost" type="button" disabled title="清除全部筛选条件与检索词"><span data-ic="close"></span>重置筛选</button>
       <button id="studyToggle" class="pill" type="button" aria-pressed="false" title="只看已标记学过的课程"><span data-ic="check"></span>已学</button>
-      <button id="planToggle" class="pill" type="button" title="学习笔记、打卡记录、学习提醒与热力图"><span data-ic="book"></span>学习规划</button>
-      <button id="favExport" class="pill ghost" type="button" title="导出现有收藏为 JSON 文件"><span data-ic="download"></span>导出</button>
-      <button id="favImport" class="pill ghost" type="button" title="从 JSON 文件导入收藏"><span data-ic="upload"></span>导入</button>
-      <input id="favImportFile" type="file" accept="application/json,.json" hidden />
+      <button id="resetFilters" class="pill ghost" type="button" disabled title="清除全部筛选条件与检索词"><span data-ic="close"></span>重置筛选</button>
+    </div>
+    <div class="row">
+      <span class="label">平台</span>
+      <div id="platformFilters" class="row" style="gap:8px;"></div>
+    </div>
+    <div class="row row-filters">
+      <span class="label">难度</span>
+      <div id="difficultyFilters" class="row" style="gap:8px;"></div>
+      <span class="label label-mid">访问</span>
+      <div id="accessFilters" class="row" style="gap:8px;"></div>
+    </div>
+    <div class="row" id="techniqueRow" hidden>
+      <span class="label">技法</span>
+      <div id="techniqueFilters" class="row" style="gap:8px;"></div>
     </div>
     <div class="row">
       <span class="label">排列</span>
@@ -1152,6 +1198,13 @@
       <button id="openOnlyToggle" class="pill" type="button" aria-pressed="false"><span data-ic="link"></span>只看有入口</button>
       <button id="densityToggle" class="pill" type="button" aria-pressed="false" title="切换紧凑 / 舒适密度"><span data-ic="dense"></span>紧凑</button>
       <button id="shareBtn" class="pill ghost" type="button" title="复制不含认证参数的页面链接"><span data-ic="link"></span>分享</button>
+    </div>
+    <div class="row">
+      <span class="label">工具</span>
+      <button id="planToggle" class="pill" type="button" title="学习笔记、打卡记录、学习提醒与热力图"><span data-ic="book"></span>学习规划</button>
+      <button id="favExport" class="pill ghost" type="button" title="导出现有收藏为 JSON 文件"><span data-ic="download"></span>导出</button>
+      <button id="favImport" class="pill ghost" type="button" title="从 JSON 文件导入收藏"><span data-ic="upload"></span>导入</button>
+      <input id="favImportFile" type="file" accept="application/json,.json" hidden />
     </div>
   </div>
 
@@ -1246,25 +1299,27 @@ let PATHS = [];
 // 分类侧边导航的锚点元素映射
 let navItems = {};
 let recsRendered = false;
-// 分类强调色（与 CATEGORY_ORDER 对应；国画/书法为扩展板块新增）
+// 分类强调色：同一色彩系统 —— OKLCH L=0.62 / C=0.14，色相按 CATEGORY_ORDER 等距 21° 递进。
+// 好处：17 类只有色相差、明度一致，标签条读起来是一条连续的色轮，不会出现某类特别亮或特别暗；
+// 对比度全部 ≥4.5:1（暗色卡底）与 ≥3.2:1（亮色卡底），满足 WCAG 非文本图形 3:1。
 const CAT_COLORS = {
   "古代文学":"#E0483D",
-  "现当代文学":"#D6336C",
-  "文学理论":"#3B5BDB",
-  "西方文论":"#7048E8",
-  "比较文学":"#0CA678",
-  "神话学":"#E8590C",
-  "汉语修辞学":"#2F9E44",
-  "写作与表达":"#F08C00",
-  "东方文学":"#E64980",
-  "语言学":"#1098AD",
-  "艺术美学":"#E03131",
-  "哲学与思想":"#6741D9",
-  "戏剧影视":"#F76707",
-  "英语文学":"#0B7285",
-  "国画":"#2B8A3E",
-  "书法":"#6E4726",
-  "儿童文学":"#C2255C"
+  "现当代文学":"#CD6057",
+  "文学理论":"#C8682E",
+  "西方文论":"#BA7500",
+  "比较文学":"#A48200",
+  "神话学":"#858F00",
+  "汉语修辞学":"#5C993D",
+  "写作与表达":"#149F65",
+  "东方文学":"#00A089",
+  "语言学":"#009DAA",
+  "艺术美学":"#0096C4",
+  "哲学与思想":"#2A8CD4",
+  "戏剧影视":"#6181DA",
+  "英语文学":"#8575D4",
+  "国画":"#A16BC3",
+  "书法":"#B763AA",
+  "儿童文学":"#C55E8A"
 };
 // 难度阶段文案（数据里 stage 为字符串："入门"/"进阶级"/"研究向"）
 const STAGE_TEXT = { "入门":"阶段1 · 入门", "进阶级":"阶段2 · 进阶", "研究向":"阶段3 · 高阶" };
@@ -1451,7 +1506,7 @@ function streakDays(){
   return n;
 }
 
-// —— 顶部统计 + 滚动 Ticker（装饰） ——
+// —— 顶部统计 + 分类索引条（可点跳转） ——
 function buildHeroExtras(){
   const cats = Array.from(new Set(COURSES.map(c => c.category)));
   const plats = ALL_PLATFORMS;
@@ -1461,8 +1516,10 @@ function buildHeroExtras(){
     `<span><b>${cats.length}</b>个方向</span>` +
     `<span><b>${plats.length}</b>个平台</span>` +
     `<span><b>${linked}</b>个可跳转入口</span>`;
-  const seg = cats.map(c => `<span>${escapeHTML(c)}</span><span class="tk-dot" aria-hidden="true">/</span>`).join("");
-  document.getElementById("tickerTrack").innerHTML = seg + seg; // 复制一份实现无缝循环
+  // 学术核验数字由数据推导：0 也照样写出来，不靠文案硬编码
+  const verified = COURSES.filter(course => course.verified_at).length;
+  const disclose = document.getElementById("disclosureText");
+  if(disclose) disclose.innerHTML = `本站 ${COURSES.length} 门课程中，经教师本人学术核验的为 <b>${verified}</b> 门。目录只整理公开入口与编辑判断，<b>不代表教师本人或任职机构认可</b>；课程质量与讲次准确性请以原平台为准。`;
   // 路径条数由数据推导，避免文案里的数字随数据增长而失真
   const pathNote = document.getElementById("pathCountNote");
   if(pathNote) pathNote.textContent = String(PATHS.length);
@@ -1524,7 +1581,14 @@ function buildPillRow(elId, entries, key, multi){
       : item.value === state[key];
     b.className = "pill" + (active ? " active" : "");
     b.setAttribute("aria-pressed", active ? "true" : "false");
-    b.textContent = item.label;
+    if(key === "category" && item.value !== "全部"){
+      const n = COURSES.filter(course => course.category === item.value).length;
+      const dot = CAT_COLORS[item.value] || "#E0483D";
+      b.innerHTML = `<span class="ci-dot" style="background:${dot}" aria-hidden="true"></span><span>${escapeHTML(item.label)}</span><span class="ci-n">${n}</span>`;
+      b.title = `${item.label} · ${n} 门`;
+    } else {
+      b.textContent = item.label;
+    }
     b.onclick = () => {
       if(multi){
         if(item.value === "全部") selected.length = 0;
@@ -1534,6 +1598,9 @@ function buildPillRow(elId, entries, key, multi){
         }
       } else state[key] = item.value;
       buildFilters(); updateResetBtn(); render(); pushFilterHash();
+      if(key === "category" && item.value !== "全部"){
+        document.getElementById("courseExplorer").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }
     };
     host.appendChild(b);
   });
@@ -1561,9 +1628,33 @@ function commitKeyword(value){
 }
 document.getElementById("searchInput").addEventListener("input", e => {
   const v = e.target.value;
+  const hero = document.getElementById("heroSearch");
+  if(hero && hero.value !== v) hero.value = v;
   clearTimeout(_searchTimer);
   _searchTimer = setTimeout(() => commitKeyword(v), 150);
 });
+
+// —— 首屏检索：与工具条/导航检索共用同一状态 ——
+const heroSearch = document.getElementById("heroSearch");
+if(heroSearch){
+  heroSearch.addEventListener("input", e => {
+    clearTimeout(_searchTimer);
+    const v = e.target.value;
+    _searchTimer = setTimeout(() => commitKeyword(v), 150);
+    const search = document.getElementById("searchInput");
+    if(search && search.value !== v) search.value = v;
+    const mini = document.getElementById("miniSearch");
+    if(mini && mini.value !== v) mini.value = v;
+  });
+  heroSearch.addEventListener("keydown", e => {
+    if(e.key === "Enter"){ e.preventDefault(); document.getElementById("courseExplorer").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); }
+  });
+  document.getElementById("heroSearchBtn").addEventListener("click", () => {
+    document.getElementById("courseExplorer").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  });
+}
+
+// —— 分类筛选：点击索引条内的分类即收窄列表并滚到结果区（见 buildPillRow） ——
 
 // —— 检索容错：音近归一 + 编辑距离≤1（规范见 AGENTS.md「检索匹配策略」） ——
 // 归一中文拼音常见混淆：翘舌/平舌、前后鼻音、ü
@@ -1722,6 +1813,27 @@ function wrapCN(text, max){
   for(let i = 0; i < chars.length; i += width) lines.push(chars.slice(i, i + width).join(""));
   return lines;
 }
+// 分类标签（13px 粗体）与底色对比须 ≥ 4.5:1：按底色亮度选深/浅字，仍不足时对标签底色向黑微调
+function _hexRgb(h){ const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function _rgbHex(rgb){ return "#" + rgb.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join(""); }
+function _relLum(rgb){ const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(rgb[0]) + 0.7152 * f(rgb[1]) + 0.0722 * f(rgb[2]); }
+function _contrastRatio(a, b){ const l1 = _relLum(a), l2 = _relLum(b); const hi = Math.max(l1, l2), lo = Math.min(l1, l2); return (hi + 0.05) / (lo + 0.05); }
+const _TAG_INK_DARK = [13, 12, 10], _TAG_INK_LIGHT = [244, 238, 227];
+const _tagPaletteCache = new Map();
+function tagPalette(color){
+  const hit = _tagPaletteCache.get(color);
+  if(hit) return hit;
+  let bg = _hexRgb(color);
+  let out = null;
+  for(let i = 0; i < 30; i++){
+    const d = _contrastRatio(bg, _TAG_INK_DARK), l = _contrastRatio(bg, _TAG_INK_LIGHT);
+    if(Math.max(d, l) >= 4.5){ out = { bg:_rgbHex(bg), ink: d >= l ? "#0d0c0a" : "#f4eee3" }; break; }
+    bg = bg.map(v => v * 0.94);
+  }
+  out = out || { bg:"#0d0c0a", ink:"#f4eee3" };
+  _tagPaletteCache.set(color, out);
+  return out;
+}
 function coverSVG(c){
   const color = CAT_COLORS[c.category] || "#E0483D";
   const uid = "cv" + (_svgUid++);
@@ -1744,6 +1856,7 @@ function coverSVG(c){
     `<tspan x="44" y="${(firstBaseline + i * lh).toFixed(1)}">${escapeHTML(ln)}</tspan>`).join("");
 
   const tagW = Array.from(cat).length * 14 + 24;
+  const tag = tagPalette(color);
 
   return `<svg class="cover-svg" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${escapeHTML(name)}">
   <defs>
@@ -1774,8 +1887,8 @@ function coverSVG(c){
   <text x="612" y="306" text-anchor="end" font-family="Georgia,serif" font-size="220" font-weight="800" fill="${color}" fill-opacity=".10">${escapeHTML(initial)}</text>
   <rect width="640" height="360" filter="url(#hcGrain)" opacity=".05"/>
   <rect x="14" y="14" width="612" height="332" fill="none" stroke="${color}" stroke-opacity=".22" stroke-width="1.5"/>
-  <rect x="40" y="36" width="${tagW}" height="26" rx="3" fill="${color}"/>
-  <text x="52" y="54" font-family="sans-serif" font-size="13" font-weight="700" letter-spacing="1" fill="#0d0c0a">${escapeHTML(cat)}</text>
+  <rect x="40" y="36" width="${tagW}" height="26" rx="3" fill="${tag.bg}"/>
+  <text x="52" y="54" font-family="sans-serif" font-size="13" font-weight="700" letter-spacing="1" fill="${tag.ink}">${escapeHTML(cat)}</text>
   <line x1="40" y1="${titleTop - 14}" x2="600" y2="${titleTop - 14}" stroke="${color}" stroke-opacity=".4" stroke-width="1"/>
   <text font-family="Georgia,serif" font-size="${fs}" font-weight="800" fill="#f4eee3" letter-spacing="-.5">${tspans}</text>
   <text x="40" y="338" font-family="sans-serif" font-size="13" font-weight="600" fill="#cbbfb0">${escapeHTML(teacher)} · ${escapeHTML(platform)}</text>
@@ -1831,13 +1944,15 @@ function render(){
       const cards = items.map(c => cardHTML(c)).join("");
       const pad = String(++seq).padStart(2,"0");
       const color = CAT_COLORS[cat] || "#E0483D";
+      const stageCount = items.reduce((acc, item) => { acc[item.stage] = (acc[item.stage] || 0) + 1; return acc; }, {});
+      const stageLine = ["入门","进阶","高阶"].filter(stage => stageCount[stage]).map(stage => `${stage} ${stageCount[stage]}`).join(" · ");
       html += `
-        <section class="cat" id="cat-${gi}" style="--cat-color:${color}">
+        <section class="cat" id="cat-${gi}" data-cat="${escapeHTML(cat)}" style="--cat-color:${color}">
           <div class="cat-head">
             <span class="num" aria-hidden="true">${pad}</span>
             <div class="cat-head-main">
               <h2>${escapeHTML(cat)}</h2>
-              <span class="cat-sub">难度阶段 · 入门 → 进阶 → 高阶</span>
+              <span class="cat-sub">${items.length} 门 · ${stageLine}</span>
             </div>
           </div>
           <div class="grid">${cards}</div>
@@ -1869,7 +1984,6 @@ function render(){
   // 入场淡入改纯 CSS 动画（见 .card animation:cardIn），无需 IntersectionObserver
   const cards = content.querySelectorAll(".card");
   cards.forEach((el, i) => { el.style.animationDelay = ((i % 12) * 55) + "ms"; });
-  if(!reduceMotion && !animOff()) attachTilt(cards);
 }
 
 // —— 单张卡片 ——
@@ -1987,7 +2101,7 @@ function stripGovPhrases(s){
 function verifyInline(c){
   const d = String(c.link_checked_at || "");
   if(!/^\d{4}-\d{2}-\d{2}$/.test(d)) return "";
-  return ` · <span class="vdate" title="条目最近一次链接核验日期">${escapeHTML(d)} 核验</span>`;
+  return ` · <span class="vdate" title="条目最近一次链接可达性核对日期">${escapeHTML(d)} 链接核对</span>`;
 }
 // 阻断原因（仅 unavailable / needs_review）：文案取自 schedule 与 known_limits，数据驱动
 function blockedNoteHTML(c){
@@ -2045,10 +2159,10 @@ function cardHTML(c){
             <span class="badge diff diff-${escapeHTML(c.difficulty)}" title="难度：${escapeHTML(c.difficulty)}（${diffLevelText(c.difficulty)}）"><i class="diff-ico" aria-hidden="true">◆</i>${escapeHTML(c.difficulty)}<span class="stars" aria-hidden="true">${diffIcon(c.difficulty)}</span></span>
             ${isCourseLinkEnabled(c) ? `<span class="access-badge ${escapeHTML(access.className)}">${access.label}</span>` : ""}
           </div>
-          <p class="meta teacher"><b>${escapeHTML(c.school)}</b>${c.title ? ` · ${escapeHTML(c.title)}` : ""}</p>
+          <p class="meta teacher"><b>${escapeHTML(c.school)}</b>${teacherAffiliation(c) ? ` · ${escapeHTML(teacherAffiliation(c))}` : ""}</p>
           <p class="meta">${escapeHTML(STAGE_TEXT[c.stage] || "阶段待定")} · ${escapeHTML(c.duration)}${verifyInline(c)}</p>
           ${introHTML}
-          <div class="review"><span class="q">编辑观点</span>${hl(c.review)}</div>
+          <div class="review"><span class="q">编辑观点</span><span class="rv-body">${hl(c.review)}</span></div>
           ${isCourseLinkEnabled(c) ? "" : blockedNoteHTML(c)}
           ${detailHTML(c)}
           <div class="card-footer">
@@ -2068,36 +2182,22 @@ function cardHTML(c){
     </article>`;
 }
 
-// 卡片 3D hover 倾斜（跟随鼠标）
-function attachTilt(cards){
-  cards.forEach(card => {
-    const inner = card.querySelector(".card-inner");
-    if(!inner) return;
-    card.addEventListener("mousemove", e => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;
-      const py = (e.clientY - r.top) / r.height;
-      inner.style.setProperty("--ry", ((px - 0.5) * 8).toFixed(2) + "deg");
-      inner.style.setProperty("--rx", ((0.5 - py) * 7).toFixed(2) + "deg");
-      inner.style.setProperty("--cx", (px * 100).toFixed(1) + "%");
-      inner.style.setProperty("--cy", (py * 100).toFixed(1) + "%");
-    });
-    card.addEventListener("mouseleave", () => {
-      inner.style.setProperty("--ry", "0deg");
-      inner.style.setProperty("--rx", "0deg");
-    });
-  });
+// 教师头衔若已带机构名，就不再重复学校：华中师范大学 · 文学院教授
+function teacherAffiliation(c){
+  const school = String(c.school || "");
+  const title = String(c.title || "");
+  if(!title) return "";
+  if(school && title.startsWith(school)) return title.slice(school.length).replace(/^[·\-—,，\s]+/, "");
+  return title;
 }
 
-// 鼠标跟随光晕（全局）
-if(!reduceMotion){
-  window.addEventListener("mousemove", e => {
-    if(animOff()) return;
-    document.documentElement.style.setProperty("--mx", e.clientX + "px");
-    document.documentElement.style.setProperty("--my", e.clientY + "px");
-    document.body.classList.add("cursor-on");
-  }, { passive:true });
+// 卡片 3D hover 倾斜（跟随鼠标）
+function attachTilt(cards){
+  // 已停用：卡片改成平面悬停（上浮 6px + 分类色顶边），不再跟随指针倾斜
+  return cards;
 }
+
+// 已移除：全局鼠标跟随光晕（装饰性动画，与"编辑部制版"的静态气质冲突）
 
 // 简单转义，防止数据里的特殊字符破坏页面
 function escapeHTML(s){
@@ -2778,7 +2878,10 @@ function initSidebarNav(){
     dot.className = "nav-dot";
     dot.style.background = CAT_COLORS[cat] || "var(--accent)";
     a.appendChild(dot);
-    a.appendChild(document.createTextNode(cat));
+    const name = document.createElement("span");
+    name.className = "nav-name";
+    name.textContent = cat;
+    a.appendChild(name);
     nav.appendChild(a);
     navItems[i] = a;
   });
@@ -2893,7 +2996,7 @@ function renderPaths(){
         return `<button class="path-course-ref" type="button" data-course-id="${escapeHTML(id)}">${escapeHTML(course ? course.name : id)}</button>`;
       }).join("");
       return `<div class="path-node${done ? " is-done" : ""}" data-node-id="${escapeHTML(node.id)}">
-        <div class="path-node-head"><input class="path-node-check" type="checkbox" data-path-id="${escapeHTML(path.id)}" data-node-id="${escapeHTML(node.id)}" ${done ? "checked" : ""} aria-label="标记${escapeHTML(node.title)}为已完成"><div><b>第 ${node.week} 周 · ${escapeHTML(node.title)}</b><p>${escapeHTML(node.instruction)}</p></div></div>
+        <div class="path-node-head"><label class="pn-check"><input class="path-node-check" type="checkbox" data-path-id="${escapeHTML(path.id)}" data-node-id="${escapeHTML(node.id)}" ${done ? "checked" : ""} aria-label="标记${escapeHTML(node.title)}为已完成"></label><div><b>第 ${node.week} 周 · ${escapeHTML(node.title)}</b><p>${escapeHTML(node.instruction)}</p></div></div>
         <div class="path-node-actions">${refs}</div>
         <p style="margin-left:29px"><strong>学习证据：</strong>${escapeHTML(node.evidence)}</p>
       </div>`;
@@ -2903,7 +3006,9 @@ function renderPaths(){
         <span class="path-kicker"><span>${path.duration_weeks} 周 · ${(path.nodes || []).length} 个节点</span><span class="path-status">草案 · 待复核</span></span>
         <h3>${escapeHTML(path.title)}</h3>
         <span class="path-question">${escapeHTML(path.guiding_question)}</span>
-        <span class="path-progress"><span>${progress.count}/${progress.total}</span><span class="path-progress-bar"><i style="width:${progress.percent}%"></i></span><span>${progress.percent}%</span></span>
+        ${progress.count
+          ? `<span class="path-progress"><span>${progress.count}/${progress.total}</span><span class="path-progress-bar"><i style="width:${progress.percent}%"></i></span><span>${progress.percent}%</span></span>`
+          : `<span class="path-progress path-progress-empty">尚未勾选 · 进度只存在本机</span>`}
         <span class="path-expand">展开路线 ↓</span>
       </summary>
       <div class="path-body">
@@ -2913,7 +3018,16 @@ function renderPaths(){
         <h4>路线节点</h4>${nodes}
       </div>
     </details>`;
-  }).join("");
+  }).join("") + `
+    <div class="path-note">
+      <span class="pn-tag">草案说明</span>
+      <h3>这 ${PATHS.length} 条路线怎么用</h3>
+      <ul>
+        <li>每条 4 周、8 个节点，节点都指向本目录里已有的课程入口。</li>
+        <li>全部未经过教师审读，请当作「选课顺序建议」，不是教学大纲。</li>
+        <li>勾选进度只存在本机浏览器，不上传、不对外公开。</li>
+      </ul>
+    </div>`;
 }
 document.getElementById("pathCards").addEventListener("change", event => {
   const box = event.target.closest(".path-node-check");
@@ -2949,7 +3063,6 @@ function initRecs(){
       panel.innerHTML = '<div class="grid recs-grid">' + items.map(c => cardHTML(c)).join("") + '</div>';
       const cards = panel.querySelectorAll(".card");
       cards.forEach((el, i) => { el.style.animationDelay = ((i % 12) * 55) + "ms"; });
-      if(!reduceMotion && !animOff()) attachTilt(cards);
       panel.addEventListener("click", onCardClick);
       recsRendered = true;
     }
