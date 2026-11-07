@@ -1,5 +1,7 @@
 # 人文学科公开课策展与样板路径
 
+**在线站点：** [https://lm7644.github.io/humanities-courses/](https://lm7644.github.io/humanities-courses/) —— GitHub Pages 自动构建 `dist/`，主分支推送后自动更新，无需本地环境即可浏览。
+
 **humanities-courses** — An open-source, fully static curation site for open courses in Chinese Language & Literature（汉语言文学）: verified course entries from Bilibili, China University MOOC, XuetangX, edX, Coursera and more, with multi-platform filtering, pinyin fuzzy search, curated learning paths, and local-only study tracking. No backend, no runtime dependencies — the built `dist/` runs on any static host (GitHub Pages deploy workflow included).
 
 P1.6 双轮审计与公网发布版。完成稳定课程ID、证据字段、五条草案路径、桌面两列两排课程卡、书封题签、滚动课程控制台、左侧点阵导航、收藏兼容迁移、无障碍弹窗、入口条件标注、计划一致性审计和空目录复刻演练。当前共 205 门课程，其中 183 门提供外部入口，22 门因失效、错配或证据不足继续阻断；教师学术核验完成数仍为 0。
